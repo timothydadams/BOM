@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/static/css/main.8f95e5fb.css",
+    "main.js": "/static/js/main.3e804f8f.js",
+    "static/media/create-account-page-image.jpg": "/static/media/create-account-page-image.6ddee2e5448b9b21c524.jpg",
+    "static/media/sign-in-page-image.jpg": "/static/media/sign-in-page-image.5ceb910203e23cc316a1.jpg",
+    "static/media/baptists-on-mission-logo.png": "/static/media/baptists-on-mission-logo.1a18f83c90b7f02de1e5.png",
+    "static/media/icomoon.svg?z4n89v": "/static/media/icomoon.f0d2d00373e903b02d00.svg",
+    "static/media/icomoon.eot?z4n89v": "/static/media/icomoon.1ab8e5ce87feaf38349e.eot",
+    "static/media/icomoon.woff?z4n89v": "/static/media/icomoon.7582d51e3836d7fe2493.woff",
+    "static/media/icomoon.ttf?z4n89v": "/static/media/icomoon.c924ff1aa3ace234ce97.ttf",
+    "index.html": "/index.html",
+    "main.8f95e5fb.css.map": "/static/css/main.8f95e5fb.css.map",
+    "main.3e804f8f.js.map": "/static/js/main.3e804f8f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8f95e5fb.css",
+    "static/js/main.3e804f8f.js"
+  ]
+}
