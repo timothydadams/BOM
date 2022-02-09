@@ -14,29 +14,35 @@ import './App.css'
 export default function App() {
 
   return(  
-    <BrowserRouter>
+  <BrowserRouter>
     <div>
-       <NavBar/>
+
+      <NavBar/>
+
       <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
-        <SideNav/> 
+
+          <SideNav/> 
+
         </div>
-        <div id="layoutSidenav_content">
-          <main>
-            <Banner/>
-      <div className="full-row white">
-        <div className="container-fluid">
-        <div className="row mt-4">
-        <Routes/> 
-        </div>
-        </div>
+        
+      <div id="layoutSidenav_content">
+        <main>
+            
+          <Banner/>
+
+          <Routes/> 
+
+        </main>
+
+        <Footer/>
+      
       </div>
-    </main>
-    <Footer/>
-      </div>
-      </div>
+
     </div> 
-    </BrowserRouter>
+    
+    </div> 
+  </BrowserRouter>
   )
 }
 
