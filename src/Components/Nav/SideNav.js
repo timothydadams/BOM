@@ -108,6 +108,7 @@ function SideNav(){
         
         <div>
             <nav className="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
+                
                 <div className="sb-sidenav-menu">
                     <div className="site-brand"> 
                         <a href="/">
@@ -119,20 +120,18 @@ function SideNav(){
                     { adminRole ? 
                     <AdminLinks location={location.pathname}/> 
                     : null }
-                        
 
-                        <UserLinks location={location.pathname} />
+                    <UserLinks location={location.pathname} />
 
-
-                        { user ? ( 
-                        <div className="sb-sidenav-footer">
-                            <div className="profile-wrapper">
-                                <div className="profile-img" data-initials={userInitials}></div>
-                                <div className="profile-name">{fullName}</div>
-                            </div>
-                        </div> ) : ""}
-                    </div>
-                </div>
+                     </div>
+                </div>        
+                    { user ? ( 
+                <div className="sb-sidenav-footer">
+                        <div className="profile-wrapper">
+                            <div className="profile-img" data-initials={userInitials}></div>
+                            <div className="profile-name">{fullName}</div>
+                        </div>
+                </div> ) : ""}
             </nav>
         </div>
     )

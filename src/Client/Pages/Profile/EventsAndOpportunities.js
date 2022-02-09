@@ -67,12 +67,12 @@ const EventsAndOpportunities = (props) => {
                     </div>
                 </div>
                 <div className="col-md-6 pt-3">
-                <div className="form-group">
-                    <input name="search" type="text" maxLength="200" id="" className="form-control" placeholder="Search Events..." value={search} onChange={handleSearchChange} />
+                    <div className="form-group">
+                         <input name="search" type="text" maxLength="200" id="" className="form-control" placeholder="Search Events..." value={search} onChange={handleSearchChange} />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <div className="full-row white">
         <div className="container-fluid">
@@ -84,8 +84,8 @@ const EventsAndOpportunities = (props) => {
                 
             </ul>
         </div>
-  </div>
-  </div>
+    </div>
+ </div>
          ) 
 }
 
