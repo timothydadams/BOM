@@ -6,8 +6,32 @@ import { useLocation } from "react-router-dom"
 
 import logo from "../img/baptists-on-mission-logo.png"
 
+function CheckPermissions(roles, module){
+    let passedChecks = false;
+    console.log(module);
+    //admin role checks so auto pass for any module
+    if(roles?.find(role => role.RoleID === 8) || roles?.find(role => role.RoleID === 33) || roles?.find(role => role.RoleID === 32)) 
+    {
+       return passedChecks = true;
+    }
+    //event admin
+    else if(roles?.find(role => role.RoleID === 35))
+    {
+      //compare path
+      return module.includes("events") || module.includes("orders") || module.includes("users") ? passedChecks = true : passedChecks = false;
+    }
+    //checkin admin
+    else if(roles?.find(role => role.RoleID === 38))
+    {
+      return module.includes("checkin") || module.includes("events") || module.includes("orders") ? passedChecks = true : passedChecks = false;
+    }
+    
+    //finance role???
+    
+  }
 
-const AdminLinks = (props) => (
+
+const AdminDashboardLinks = (props) => (
     <div>
         <div className="sb-sidenav-menu-heading">
             Administration
@@ -16,40 +40,67 @@ const AdminLinks = (props) => (
             <div className="sb-nav-link-icon"></div>
             Admin Dashboard 
         </Link> 
-        <Link className={props.location === '/admin/users'? 'nav-link active' : 'nav-link'} to="/admin/users">
-            <div className="sb-nav-link-icon"></div>
-            Add/Edit Users
-        </Link> 
-        <Link className={props.location === '/admin/events' ? 'nav-link active' : 'nav-link'} to="/admin/events">
-            <div className="sb-nav-link-icon"></div>
-            Add/Edit Events
-        </Link> 
-        <Link className={props.location === '/admin/certifications' ? 'nav-link active' : 'nav-link'} to="/admin/certifications">
-            <div className="sb-nav-link-icon"></div>
-            Add/Edit Certifications
-        </Link> 
-        <Link className={props.location === '/admin/finances' ? 'nav-link active' : 'nav-link'} to="/admin/finances">
-            <div className="sb-nav-link-icon"></div>
-            Add/Edit Orders
-        </Link> 
-        <Link className={props.location === '/admin/reporting' ? 'nav-link active' : 'nav-link'} to="/admin/reporting">
-            <div className="sb-nav-link-icon"></div>
-           Admin Reporting
-        </Link> 
-        <Link className={props.location === '/admin/roles' ? 'nav-link active' : 'nav-link'} to="/admin/roles">
-            <div className="sb-nav-link-icon"></div>
-            Add/Edit Roles
-        </Link> 
-        <Link className={props.location === '/admin/settings' ? 'nav-link active' : 'nav-link'} to="/admin/settings">
-            <div className="sb-nav-link-icon"></div>
-            Admin Settings
-        </Link> 
-        <Link className={props.location === '/admin/checkin' ? 'nav-link active' : 'nav-link'} to="/admin/checkin">
-            <div className="sb-nav-link-icon"></div>
-           Admin Check In
-        </Link>
     </div>
 );
+
+const AdminEventLinks = (props) => (
+    <Link className={props.location === '/admin/events' ? 'nav-link active' : 'nav-link'} to="/admin/events">
+     <div className="sb-nav-link-icon"></div>
+        Add/Edit Events
+    </Link> 
+
+)
+
+const AdminUserLinks = (props) => (
+    <Link className={props.location === '/admin/users'? 'nav-link active' : 'nav-link'} to="/admin/users">
+            <div className="sb-nav-link-icon"></div>
+            Add/Edit Users
+    </Link> 
+)
+
+const AdminCertificationLinks = (props) =>(
+    <Link className={props.location === '/admin/certifications' ? 'nav-link active' : 'nav-link'} to="/admin/certifications">
+        <div className="sb-nav-link-icon"></div>
+        Add/Edit Certifications
+    </Link> 
+)
+
+const AdminFinanceLinks = (props) => (
+    <Link className={props.location === '/admin/finances' ? 'nav-link active' : 'nav-link'} to="/admin/finances">
+        <div className="sb-nav-link-icon"></div>
+        Add/Edit Orders
+    </Link>     
+)
+
+const AdminReportingLinks = (props) => (
+    <Link className={props.location === '/admin/reporting' ? 'nav-link active' : 'nav-link'} to="/admin/reporting">
+        <div className="sb-nav-link-icon"></div>
+        Admin Reporting
+    </Link>     
+)
+
+const AdminRolesLinks = (props) => (
+    <Link className={props.location === '/admin/roles' ? 'nav-link active' : 'nav-link'} to="/admin/roles">
+        <div className="sb-nav-link-icon"></div>
+        Add/Edit Roles
+    </Link> 
+)
+
+const AdminSettingsLinks = (props) => (
+    <Link className={props.location === '/admin/settings' ? 'nav-link active' : 'nav-link'} to="/admin/settings">
+        <div className="sb-nav-link-icon"></div>
+        Admin Settings
+    </Link> 
+)
+
+const AdminCheckInLinks = (props) => (
+    <Link className={props.location === '/admin/checkin' ? 'nav-link active' : 'nav-link'} to="/admin/checkin">
+        <div className="sb-nav-link-icon"></div>
+        Admin Check In
+    </Link>
+)
+
+
 
 
 const UserLinks = (props) => (
@@ -88,12 +139,11 @@ function SideNav(){
     let userParsed;
     let userInitials;
     let fullName;
-    let adminRole;
+
 
     try{
      userParsed = JSON.parse(user["User"]);
      roles = JSON.parse(user["Roles"]);
-     adminRole = roles.find(role => role.RoleDisplayName === 'CMS Desk Administrators');
     }
     catch(ex){
         console.log(ex);
@@ -117,9 +167,42 @@ function SideNav(){
                     </div>
                     <div className="nav">
                         
-                    { adminRole ? 
-                    <AdminLinks location={location.pathname}/> 
+                    { CheckPermissions(roles, 'dashboard') ? 
+                    <AdminDashboardLinks location={location.pathname}/> 
                     : null }
+
+                    { CheckPermissions(roles, 'users') ? 
+                    <AdminUserLinks location={location.pathname}/> 
+                    : null }
+
+                    { CheckPermissions(roles, 'events') ? 
+                    <AdminEventLinks location={location.pathname}/> 
+                    : null }
+
+                    { CheckPermissions(roles, 'certifications') ? 
+                    <AdminCertificationLinks location={location.pathname}/> 
+                    : null }
+
+                    { CheckPermissions(roles, 'orders') ? 
+                    <AdminFinanceLinks location={location.pathname}/> 
+                    : null }
+
+                    { CheckPermissions(roles, 'reporting') ? 
+                    <AdminReportingLinks location={location.pathname}/> 
+                    : null }
+
+                    { CheckPermissions(roles, 'roles') ? 
+                    <AdminRolesLinks location={location.pathname}/> 
+                    : null }
+
+                    { CheckPermissions(roles, 'settings') ? 
+                    <AdminSettingsLinks location={location.pathname}/> 
+                    : null }
+
+                    { CheckPermissions(roles, 'checkin') ? 
+                    <AdminCheckInLinks location={location.pathname}/> 
+                    : null }
+
 
                     <UserLinks location={location.pathname} />
 

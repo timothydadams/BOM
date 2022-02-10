@@ -50,7 +50,8 @@ const EventsAndOpportunities = (props) => {
         item["BP_Title"].toLowerCase().includes(value) ||
         item["BP_Description"].toLowerCase().includes(value)
        );
-       setFilteredData(arr => result);
+        setFilteredData(arr => result);
+       
    }
 
 

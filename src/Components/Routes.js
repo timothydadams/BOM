@@ -45,8 +45,8 @@ const Routes = () => {
         <ProtectedRoute exact path="/admin/events/create" component={CreateEditEvent} />
         <ProtectedRoute exact path="/admin/events/edit/:eventid" component={CreateEditEvent}/>
         <ProtectedRoute exact path="/admin/events/edit/registration/:eventid" component={RegistrationView}/>
-        <ProtectedRoute exact path="/admin/events/edit/registration/:registrationid/:eventid" component={RegistrationForm}/>
-        <ProtectedRoute exact path="/admin/events/registration/add/:eventid" component={RegistrationForm}/>
+        <ProtectedRoute exact path="/admin/events/edit/registration/:eventid/:registrationid" component={RegistrationForm}/>
+        <ProtectedRoute exact path="/admin/events/edit/registration/add/:eventid" component={RegistrationForm}/>
         <ProtectedRoute exact path="/admin/events/edit/optionalcosts/:eventid" component={OptionalCosts}/>
         <ProtectedRoute exact path="/admin/events/edit/status/:eventid" component={Status}/>
         <ProtectedRoute exact path="/admin/users" component={Users}/>

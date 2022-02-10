@@ -4,7 +4,7 @@ import {useParams, NavLink} from "react-router-dom"
 import axios from "axios"
 import { useHistory } from 'react-router-dom';
 import RegistrationForm from "../Forms/BackEnd/RegistrationForm";
-import { DataGrid, GridToolbarContainer, GridToolbarExport, GridColumnsToolbarButton, GridFilterToolbarButton } from '@material-ui/data-grid';
+import { DataGrid , GridToolbar, GridRowParams} from '@mui/x-data-grid';
 import { useSnackbar } from 'notistack';
 
 const Registration = (props) => {
@@ -39,6 +39,7 @@ const Registration = (props) => {
                 }
               });
               setData(result.data);
+              console.log(result.data);
               enqueueSnackbar('Registrations fetch success');
           }
             catch(error){
@@ -68,11 +69,20 @@ const Registration = (props) => {
         <div>Loading ...</div>
           ) : (
             <div>
-                <NavLink className="btn" to={"/admin/events/registration/add/" + eventid}>Add Registration</NavLink>
+                <NavLink className="btn" to={"/admin/events/edit/registration/add/" + eventid}>Add Registration</NavLink>
             <div style={{ display: 'flex', height: '500px', width:'1000px' }}>
                 
               <div style={{ flexGrow: 1 }}>
-                <DataGrid columns={columns} rows={data} getRowId={(row) => row.RegistrationID} onRowSelected={(row) => history.push("/admin/events/edit/registration/" + row.data.RegistrationID + '/' + eventid)}  disableMultipleSelection={true} /> 
+              <DataGrid columns={columns} rows={data} getRowId={(row) => row.RegistrationID}  
+                onRowClick={(row, event) => {
+                  if (!event.ignore) {
+                    history.push("/admin/events/edit/registration/" + eventid + '/' + row.RegistrationID)
+                  }
+                }}
+                components={{Toolbar: GridToolbar,}} 
+                disableMultipleSelection={true} 
+                disableSelectionOnClick={true} 
+                /> 
               </div>
             </div>
             </div>
