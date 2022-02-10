@@ -8,11 +8,11 @@ import EventsTile from './EventsTile'
 
 const EventsAndOpportunities = (props) => {
   const [data, setData] = useState([]);
-  const [filteredData,setFilteredData] = useState(data);
+  const [filteredData,setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [drpCateogory, setDrpCategory] = useState();
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState('');
   const history = useHistory();
   const [hasFilterData, setHasFilterData] = useState();
   const categoriesList = [{ value: 68, label: "Adult Co-ed Program" }, { value:65,label:"Adult Events"}];
@@ -44,15 +44,13 @@ const EventsAndOpportunities = (props) => {
    }
 
    const handleSearchChange = option => {
-       setSearch({ search: option});
+       setSearch(option.value);
        let value = option.target.value.toLowerCase();
-       let result = [];
-       result = data.filter((data) => {
-       return data.BP_Title.search(value) != -1;
-       });
-       //setHasFilterData(true);
-       console.log(result);
-       //setFilteredData(result);
+       let result = data.filter(item => 
+        item["BP_Title"].toLowerCase().includes(value) ||
+        item["BP_Description"].toLowerCase().includes(value)
+       );
+       setFilteredData(arr => result);
    }
 
 
@@ -76,7 +74,15 @@ const EventsAndOpportunities = (props) => {
     </div>
     <div className="full-row white">
             <ul id="event-grid">     
-                { data.map(singleEvent =>
+                { filteredData && filteredData.length > 0 ? (
+                    filteredData.map(singleEvent =>
+                        <EventsTile key={singleEvent.EventsID} Event={singleEvent}/>
+                    )
+
+                ) : 
+                
+                
+                data.map(singleEvent =>
                     <EventsTile key={singleEvent.EventsID} Event={singleEvent}/>
                 )}
                 
