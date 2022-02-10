@@ -7,7 +7,7 @@ class Dashboard extends Component {
         render(){
             
         return(
-          <div class="row">
+          <div className="row">
             {DashboardList.map(dashitem => 
                 <DashboardTile 
                   key={dashitem.id} 
