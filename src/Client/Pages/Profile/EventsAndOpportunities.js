@@ -75,15 +75,12 @@ const EventsAndOpportunities = (props) => {
         </div>
     </div>
     <div className="full-row white">
-        <div className="container-fluid">
-            <ul id="event-grid">
-                
+            <ul id="event-grid">     
                 { data.map(singleEvent =>
                     <EventsTile key={singleEvent.EventsID} Event={singleEvent}/>
                 )}
                 
             </ul>
-        </div>
     </div>
  </div>
          ) 

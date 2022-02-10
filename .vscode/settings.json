@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/7f59a802-57a5-4af8-9a9e-00880f1c8edb/resourceGroups/ncbm/providers/Microsoft.Web/sites/bomreactjs",
+    "appService.deploySubpath": "."
+}

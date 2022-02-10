@@ -7,13 +7,15 @@ class Dashboard extends Component {
         render(){
             
         return(
-            DashboardList.map(dashitem => 
+          <div class="row">
+            {DashboardList.map(dashitem => 
                 <DashboardTile 
                   key={dashitem.id} 
                   name={dashitem.name} 
                   url={dashitem.url} 
                   icon={dashitem.icon}
-                />)
+                />)}
+          </div>
         )
     }
 }

@@ -29,7 +29,7 @@ export const NavBar = () => {
             <div> <span className="top"></span> <span className="middle"></span> <span className="bottom"></span> </div>
             </a></div>
             <div className="tag d-none d-lg-block d-xl-block">Sharing God's Love in Word and Deed</div>
-            <div className="log-out">{ userParsed? <NavLink to='/login' onClick={logout}>Log Out {firstName}</NavLink> : ''}</div>
+            <div className="log-out">{ userParsed? <NavLink to='/login' onClick={logout}>Log Out {firstName}</NavLink> : <NavLink to='/login'>Sign In</NavLink>}</div>
         </nav>
     )
 }
