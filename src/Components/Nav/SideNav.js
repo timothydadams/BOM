@@ -1,14 +1,13 @@
-import React from "react"
-import {Link} from "react-router-dom"
+import React, { useEffect , useState} from "react"
+import {Link, NavLink, useLocation} from "react-router-dom"
 import { useUser } from "../Hooks/useUser"
-import { useLocation } from "react-router-dom"
 
 
 import logo from "../img/baptists-on-mission-logo.png"
 
 function CheckPermissions(roles, module){
     let passedChecks = false;
-    console.log(module);
+    //console.log(module);
     //admin role checks so auto pass for any module
     if(roles?.find(role => role.RoleID === 8) || roles?.find(role => role.RoleID === 33) || roles?.find(role => role.RoleID === 32)) 
     {
@@ -135,10 +134,16 @@ const UserLinks = (props) => (
 function SideNav(){
     const location = useLocation();
     const user = useUser();
+    const [isLoaded, setIsLoaded] = useState(false);
     let roles;
     let userParsed;
     let userInitials;
     let fullName;
+
+    //attempt to reload page in order to show admin bar after login
+    useEffect(()=> {
+        user ? setIsLoaded(true) : setIsLoaded(false);
+    }, []);
 
 
     try{
@@ -146,7 +151,7 @@ function SideNav(){
      roles = JSON.parse(user["Roles"]);
     }
     catch(ex){
-        console.log(ex);
+        
     }
     
     if(userParsed)
@@ -156,14 +161,14 @@ function SideNav(){
     }
     return (
         
-        <div>
+        <span>
             <nav className="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
                 
                 <div className="sb-sidenav-menu">
                     <div className="site-brand"> 
-                        <a href="/">
+                        <NavLink to="/events">
                             <img src={logo} alt="Baptists On Mission" />
-                        </a>
+                        </NavLink>
                     </div>
                     <div className="nav">
                         
@@ -208,15 +213,16 @@ function SideNav(){
 
                      </div>
                 </div>        
-                    { user ? ( 
+            { user ? ( 
                 <div className="sb-sidenav-footer">
                         <div className="profile-wrapper">
                             <div className="profile-img" data-initials={userInitials}></div>
                             <div className="profile-name">{fullName}</div>
                         </div>
-                </div> ) : ""}
+                </div> ) 
+            : ""}
             </nav>
-        </div>
+        </span>
     )
 }
 

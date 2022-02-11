@@ -11,8 +11,10 @@ import { useSnackbar } from 'notistack';
 
 const GetEvents = (props) => {
   const [data, setData] = useState([]);
+ // const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+ // const [search, setSearch] = useState('');
   const history = useHistory();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -46,6 +48,15 @@ const GetEvents = (props) => {
     //console.log(cellValues.row);
     enqueueSnackbar('Event Cloned');
   };
+
+ // function handleSearchChange(input){
+ //   setSearch(input.value);
+ //   let value = input.target.value.toLowerCase();
+ //      let result = data.filter(item => 
+ //       item["BP_Title"].toLowerCase().includes(value)
+ //      );
+ //       setFilteredData(arr => result);
+ // }
 
   const columns = [
     {
@@ -111,6 +122,7 @@ const GetEvents = (props) => {
             {isLoading ? (
         <div>Loading ...</div>
           ) : (
+            
             <div style={{ display: 'flex', height: '500px', width:'1000px' }}>
               <div style={{ flexGrow: 1 }}>
                 <DataGrid columns={columns} rows={data} getRowId={(row) => row.EventsID} 
@@ -127,6 +139,7 @@ const GetEvents = (props) => {
                 /> 
               </div>
             </div>
+           
           )}
           </div>) 
 }

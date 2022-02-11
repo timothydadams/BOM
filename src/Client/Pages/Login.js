@@ -32,7 +32,7 @@ export default function Login(){
           //console.log('This is back from server', typeof response);
           if(response && response.data !== undefined)
           {
-            console.log('After response', response.data);
+            //console.log('After response', response.data);
             setToken(response.data);
             enqueueSnackbar("Login Successful");
             //have a redirect url

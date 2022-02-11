@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { DataGrid , GridToolbar } from '@mui/x-data-grid';
 import Select from "react-select";
 import EventsTile from './EventsTile'
+import NoResults from '../../../Components/NoResults'
 
 
 const EventsAndOpportunities = (props) => {
@@ -82,10 +83,10 @@ const EventsAndOpportunities = (props) => {
 
                 ) : 
                 
-                
+            filteredData ? <NoResults/> :
                 data.map(singleEvent =>
                     <EventsTile key={singleEvent.EventsID} Event={singleEvent}/>
-                )}
+                )  }
                 
             </ul>
     </div>

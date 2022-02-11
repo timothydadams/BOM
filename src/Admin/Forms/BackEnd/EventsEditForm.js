@@ -1,13 +1,14 @@
-import React, { useState, useEffect, Component } from "react"
+import React, { useState, useEffect, Component, useRef } from "react"
 import { useSnackbar } from 'notistack';
 import Select from 'react-select'
 import axios from "axios"
 import {useParams , NavLink} from "react-router-dom"
-import ReactInputDateMask from 'react-input-date-mask';
+import ReactInputDateMask from 'react-input-date-mask'
+import { Editor } from '@tinymce/tinymce-react'
 
 
 export default function EventsEditForm(){
-  
+  const editorRef = useRef(null);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [bomEvent, setFields] = useState({
     EventsID: 0,
@@ -273,7 +274,7 @@ return (
     <div className="col-md-12">
       <div className="form-group">
         <label id="m_c_ctl02_BP_Description_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_Description_editor">Event Description:</label>
-        <textarea id="BP_Description" value={bomEvent.BP_Description} onChange={handleFieldChange}></textarea>
+        <Editor onInit={(evt,editor) => editorRef.current = editor} id="BP_Description" initialValue={bomEvent.BP_Description} init={{height:500, menubar:true}} onChange={handleFieldChange}></Editor>
         <small className="form-text text-muted">Enter a short description/overview for this event.</small> 
       </div>
     </div>
