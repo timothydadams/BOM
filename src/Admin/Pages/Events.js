@@ -12,7 +12,7 @@ class Events extends Component {
         <div>
           <Container>
             
-            <Link to="/events/create" className='btn btn-primary'>
+            <Link to="/admin/events/create" className='btn btn-primary'>
               <i className="icon-edit py-5"></i>Create New Event
             </Link>
           </Container>

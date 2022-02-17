@@ -5,12 +5,14 @@ import { useHistory } from 'react-router-dom';
 import { DataGrid , GridToolbar, GridRowParams} from '@mui/x-data-grid';
 import { Button } from "@mui/material";
 import { useSnackbar } from 'notistack';
+import dompurify from 'dompurify'
 //import { authHeader } from '../Authentication/authHeader'
 
 
 
 const GetEvents = (props) => {
   const [data, setData] = useState([]);
+  const [categoriesList, setCategoriesList] = useState([]);
  // const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -25,11 +27,15 @@ const GetEvents = (props) => {
     const fetchData = async () => {
       setIsLoading(true);
       try{
-          const result = await axios(
+
+        const categoriesListResult = await axios.get('https://bomreactapi.azurewebsites.net/events/getcategories');
+        setCategoriesList(categoriesListResult.data);
+
+        const result = await axios(
             'https://bomreactapi.azurewebsites.net/events/getevents', 
-          );
-          setData(result.data);
-          enqueueSnackbar('Events fetch success');
+        );
+        setData(result.data);
+        enqueueSnackbar('Events fetch success');
       }
         catch(error){
         setError(true)
@@ -49,20 +55,17 @@ const GetEvents = (props) => {
     enqueueSnackbar('Event Cloned');
   };
 
- // function handleSearchChange(input){
- //   setSearch(input.value);
- //   let value = input.target.value.toLowerCase();
- //      let result = data.filter(item => 
- //       item["BP_Title"].toLowerCase().includes(value)
- //      );
- //       setFilteredData(arr => result);
- // }
+  const viewAttendees = (event, cellValues) => {
+    
+    history.push('/admin/events/attendees/' + cellValues.row["EventsID"]);
+  };
 
   const columns = [
     {
-      field: "Actions", width:75,
+      field: "Actions", width:275,
       renderCell: (cellValues) => {
         return (
+          <div>
           <Button
             variant="contained"
             color="primary"
@@ -72,46 +75,48 @@ const GetEvents = (props) => {
             }}
           >
             Clone
+          </Button> | 
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={(event) => {
+              event.ignore = true;
+              viewAttendees(event, cellValues);
+            }}
+          >
+            View Attendees
           </Button>
+          </div>
         );
       }
     },
-    { field: 'EventsID', headerName: 'ID', width:125 },
-    { field: 'BP_Title', headerName: 'Title', width:200},
+    { field: 'EventsID', headerName: 'ID', width:75 },
     { field: 'BP_Type', headerName: 'Type', width:100},
+    { field: 'BP_Title', headerName: 'Title', width:200},
     { field: 'BP_Address', headerName:'Address', width:200},
-    { field: 'BP_Categories', headerName:'Categories', width:100,
-  renderCell:(cellValues) => {
-    return (
-      <div>
-        {getCategoriesById(cellValues)}
-      </div>
-    )
-  }},
+    { field: 'BP_Categories', headerName:'Categories', width:300,
+    renderCell: (cellValues) => {
+      let returnVal ='';
+      let splitVals = cellValues.value.split(';');
+      splitVals.map((catid) => 
+      {
+          let cat = categoriesList?.find(x=> x.CategoryID == catid);
+          returnVal += cat?.CategoryDisplayName;
+          
+      }
+      );
+      return (
+        returnVal    
+      )
+    },
+  },
   ];
 
 
   const gridStyle = {
     width: 1000,
   }
-
-  function getCategoriesById(input){
-    const returnValueString = '';
-    try{
-      //console.log(JSON.stringify(values.value));
-      let splitVals = input.value.split(';'),i;
-      for(i=0; i < splitVals.length; i++){
-        //get corresponding categories
-        let categoryId = splitVals[i];
-        returnValueString += "Category,"
-      }
-    }
-    catch(ex){
-     // console.log(ex);
-    }
-    return returnValueString;
-  }
-
+  
   return (
           <div>
             {error && (
@@ -123,9 +128,8 @@ const GetEvents = (props) => {
         <div>Loading ...</div>
           ) : (
             
-            <div style={{ display: 'flex', height: '500px', width:'1000px' }}>
-              <div style={{ flexGrow: 1 }}>
-                <DataGrid columns={columns} rows={data} getRowId={(row) => row.EventsID} 
+            <div>
+                <DataGrid flexGrow autoHeight={true} autoPageSize={true} pageSize={100} columns={columns} rows={data} getRowId={(row) => row.EventsID} 
                 //onRowClick={(row) => history.push("/events/edit/" + row.id)} 
                 onRowClick={(params, event) => {
                   if (!event.ignore) {
@@ -137,7 +141,6 @@ const GetEvents = (props) => {
                 disableMultipleSelection={true} 
                 disableSelectionOnClick={true} 
                 /> 
-              </div>
             </div>
            
           )}

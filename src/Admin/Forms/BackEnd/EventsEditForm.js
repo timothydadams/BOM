@@ -34,6 +34,10 @@ export default function EventsEditForm(){
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   const eventid = params.eventid;
+
+  const [categoriesList, setCategoriesList] = useState([]);
+  const [partnershipsList, setPartnershipsList] = useState([]);
+  const [accountingCodesList, setAccountingCodesList] = useState([]);
   
     useEffect(() => {
       const fetchData = async () => {
@@ -70,23 +74,21 @@ export default function EventsEditForm(){
      function getSupportingLists(){
         // execute simultaneous requests 
         axios.all([
-          axios.get('https://api.github.com/users/mapbox'),
-          axios.get('https://api.github.com/users/phantomjs'),
-          axios.get('https://api.github.com/users/phantomjs')
+          axios.get('https://bomreactapi.azurewebsites.net/events/getcategories'),
+          axios.get('https://bomreactapi.azurewebsites.net/events/getpartnerships'),
+          axios.get('https://bomreactapi.azurewebsites.net/events/getaccountingcodes')
         ])
         .then(responseArr => {
           //this will be executed only when all requests are complete
-          console.log('Date created: ', responseArr[0].data.created_at);
-          console.log('Date created: ', responseArr[1].data.created_at);
-          console.log('Date created: ', responseArr[2].data.created_at);
+          setCategoriesList(responseArr[0].data);
+          setPartnershipsList(responseArr[1].data);
+          setAccountingCodesList(responseArr[2].data);
         });
      }
    
     //68;65;19;44
     //build lists for dropdown selects
-    const categoriesList = [{ value: 68, label: "Adult Co-ed Program" }, { value:65,label:"Adult Events"}];
-    const partnershipsList = [{ value: "Agriculture", label: "Agriculture" }, { value:"Alaska",label:"Alaska"}];
-    const accountingCodesList = [{ value: "Guatemala", label: "Guatemala" }, { value:"Alaska",label:"Alaska"}];
+    
     const eventTabs = [{title: 'General', value: 'General'}, {title:'Registration', value: 'Registration'}, {title:'Optional Costs', value: 'Optional Costs'}, {title:'Status', value: 'Status'}];
   
 
@@ -153,8 +155,6 @@ export default function EventsEditForm(){
 
 return (
 <form onSubmit={handleSubmit}>
-{console.log(bomEvent.BP_StartDate)}
-{console.log(bomEvent.BP_EndDate)}
 <div className="full-row white">
 <div className="container-fluid">
 <div className="row">

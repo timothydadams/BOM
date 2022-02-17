@@ -16,12 +16,16 @@ const EventsAndOpportunities = (props) => {
   const [search, setSearch] = useState('');
   const history = useHistory();
   const [hasFilterData, setHasFilterData] = useState();
-  const categoriesList = [{ value: 68, label: "Adult Co-ed Program" }, { value:65,label:"Adult Events"}];
+  const [categoriesList, setCategoriesList] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try{
+          const categoriesResult = await axios('https://bomreactapi.azurewebsites.net/events/getcategories');
+          setCategoriesList(JSON.parse(categoriesResult.data));
+          console.log(categoriesResult.data);
+
           const result = await axios(
             'https://bomreactapi.azurewebsites.net/events/getevents',
           );
@@ -41,7 +45,7 @@ const EventsAndOpportunities = (props) => {
   }, []);
 
   const handleCategoryChange = option => {
-    setDrpCategory({ drpCateogory: option});
+    setDrpCategory({ drpCateogory: option.value});
    }
 
    const handleSearchChange = option => {
@@ -63,7 +67,7 @@ const EventsAndOpportunities = (props) => {
             <div className="row pt-4 pb-4">
                 <div className="col-md-6 pt-3">
                     <div className="form-group">
-                        <Select name="BP_Categories"  placeholder="Select Categories" options={categoriesList} id="BP_Categories" value={drpCateogory} onChange={setDrpCategory}/>
+                        <Select placeholder="Select Categories"  options={categoriesList} id="drpCategory" value={drpCateogory} onChange={setDrpCategory}/>
                     </div>
                 </div>
                 <div className="col-md-6 pt-3">
@@ -78,14 +82,14 @@ const EventsAndOpportunities = (props) => {
             <ul id="event-grid">     
                 { filteredData && filteredData.length > 0 ? (
                     filteredData.map(singleEvent =>
-                        <EventsTile key={singleEvent.EventsID} Event={singleEvent}/>
+                        <EventsTile key={singleEvent.EventsID} Event={singleEvent} Categories={categoriesList}/>
                     )
 
                 ) : 
                 
             filteredData ? <NoResults/> :
                 data.map(singleEvent =>
-                    <EventsTile key={singleEvent.EventsID} Event={singleEvent}/>
+                    <EventsTile key={singleEvent.EventsID} Event={singleEvent} categoriesList={categoriesList}/>
                 )  }
                 
             </ul>

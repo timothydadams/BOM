@@ -5,10 +5,14 @@ import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import { NavLink } from "react-router-dom";
+import CategoryHelper from "../../../Components/CategoryHelper";
 import dompurify from 'dompurify'
 import Register from './Register'
 
 function EventsTile(props){
+
+
+
 
 return(
   <li className="event-wrapper light-gray">
@@ -27,10 +31,7 @@ return(
                     <div className="col-md-12">
                       <div className="event-category-wrapper">
                         <ul className="event-categories">
-                          <li>United States Missions</li>
-                          <li>Construction Ministry</li>
-                          <li>National Projects</li>
-                          <li>Wyoming</li>
+                          <CategoryHelper Event={props?.Event} Categories={props?.Categories}/>
                         </ul>
                       </div>
                     </div>

@@ -6,7 +6,7 @@ import AdminLogin from './../Admin/Pages/Login'
 //loop through users current assigned roles and match to modules
 function CheckPermissions(roles, module){
   let passedChecks = false;
-  console.log(module);
+  //console.log(module);
   //admin role checks so auto pass for any module
   if(roles?.find(role => role.RoleID === 8) || roles?.find(role => role.RoleID === 33) || roles?.find(role => role.RoleID === 32)) 
   {
