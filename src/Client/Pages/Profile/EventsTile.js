@@ -15,11 +15,11 @@ function EventsTile(props){
 
 
 return(
-  <li className="event-wrapper light-gray">
+  <li className="event-wrapper">
       <Accordion>
         <AccordionSummary aria-controls={props.Event.EventsID + '-content'}
           id={props.Event.EventsID + '-header'} >
-        <div className="row no-gutter align-items-center mt-4">
+        <div className="row no-gutter align-items-center mt-4 light-gray">
                 <div className="col-lg-2 col-12">
                   <div className="event-date">{dateFormat(props.Event.BP_StartDate, "mmm dS, yyyy")}</div>
                 </div>
