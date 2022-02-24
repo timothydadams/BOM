@@ -186,19 +186,19 @@ return (
     <div className="col-md-6">
       <div className="form-group">
         <label id="m_c_ctl02_BP_Partnership_lb" className="required-caption" htmlFor="m_c_ctl02_BP_Partnership_drpSingleSelect">Partnership</label>
-        <Select placeholder="Select Partnership" options={partnershipsList} name="m$c$ctl02$BP_Partnership$drpSingleSelect" id="BP_Partnership" className="DropDownField" value={partnershipsList.find(item => item.value === bomEvent.BP_Partnership)} onChange={handlePartnershipsChange} />
+        <Select placeholder="Select Partnership" options={partnershipsList} getOptionLabel={options=>options["Name"]} getOptionValue={options=>options["ItemID"]} name="m$c$ctl02$BP_Partnership$drpSingleSelect" id="BP_Partnership" className="DropDownField" value={partnershipsList.find(item => item.value === bomEvent.BP_Partnership)} onChange={handlePartnershipsChange} />
         <small className="form-text text-muted">Select partnership if event is associated with one.</small> </div>
     </div>
     <div className="col-md-6">
       <div className="form-group">
         <label id="m_c_ctl02_BP_AccountingCode_lb" className="required-caption" htmlFor="m_c_ctl02_BP_AccountingCode_dropDownList">Accounting Code</label>
-        <Select placeholder="Select Accounting Code" options={accountingCodesList} name="m$c$ctl02$BP_AccountingCode$dropDownList" id="BP_AccountingCode" className="DropDownField" value={accountingCodesList.find(item => item.value === bomEvent.BP_AccountingCode)} onChange={handleAccountingCodesChange} />
+        <Select placeholder="Select Accounting Code" options={accountingCodesList} getOptionLabel={options=>options["Name"]} getOptionValue={options=>options["ItemID"]} name="m$c$ctl02$BP_AccountingCode$dropDownList" id="BP_AccountingCode" className="DropDownField" value={accountingCodesList.find(item => item.value === bomEvent.BP_AccountingCode)} onChange={handleAccountingCodesChange} />
         <small className="form-text text-muted">This is used for accounts receivables to apply the money to this event.</small> </div>
     </div>
     <div className="col-md-6">
       <div className="form-group">
         <label id="m_c_ctl02_BP_Categories_lb" className="control-label editing-form-label" htmlFor="">Categories</label>
-        <Select name="BP_Categories" placeholder="Select Categories" options={categoriesList} isMulti id="BP_Categories" value={bomEvent.BP_Categories} onChange={handleCategoriesChange}/>
+        <Select name="BP_Categories" placeholder="Select Categories" getOptionLabel={options=>options["CategoryDisplayName"]} getOptionValue={options=>options["CategoryID"]} options={categoriesList} isMulti id="BP_Categories" value={bomEvent.BP_Categories} onChange={handleCategoriesChange}/>
         <small className="form-text text-muted">Select one or more categories.</small> </div>
     </div>
     <div className="col-md-12">

@@ -23,14 +23,14 @@ const EventsAndOpportunities = (props) => {
       setIsLoading(true);
       try{
           const categoriesResult = await axios('https://bomreactapi.azurewebsites.net/events/getcategories');
-          setCategoriesList(JSON.parse(categoriesResult.data));
-          console.log(categoriesResult.data);
+          setCategoriesList(categoriesResult.data);
+          console.log('categories list fetched from api: ',categoriesResult.data);
 
           const result = await axios(
             'https://bomreactapi.azurewebsites.net/events/getevents',
           );
           setData(result.data);
-          setFilteredData(result.data);
+          console.log(result.data);
       }
         catch(error){
         setError(true)
@@ -67,7 +67,7 @@ const EventsAndOpportunities = (props) => {
             <div className="row pt-4 pb-4">
                 <div className="col-md-6 pt-3">
                     <div className="form-group">
-                        <Select placeholder="Select Categories"  options={categoriesList} id="drpCategory" value={drpCateogory} onChange={setDrpCategory}/>
+                        <Select placeholder="Select Categories" getOptionLabel={options=>options["CategoryDisplayName"]} getOptionValue={options=>options["CategoryID"]} options={categoriesList} value={drpCateogory} onChange={setDrpCategory}/>
                     </div>
                 </div>
                 <div className="col-md-6 pt-3">
@@ -79,7 +79,7 @@ const EventsAndOpportunities = (props) => {
         </div>
     </div>
     <div className="full-row white">
-            <ul id="event-grid">     
+            <ul id="event-grid">  
                 { filteredData && filteredData.length > 0 ? (
                     filteredData.map(singleEvent =>
                         <EventsTile key={singleEvent.EventsID} Event={singleEvent} Categories={categoriesList}/>
@@ -87,9 +87,9 @@ const EventsAndOpportunities = (props) => {
 
                 ) : 
                 
-            filteredData ? <NoResults/> :
+            filteredData.length > 0 ? <NoResults/> :
                 data.map(singleEvent =>
-                    <EventsTile key={singleEvent.EventsID} Event={singleEvent} categoriesList={categoriesList}/>
+                    <EventsTile key={singleEvent.EventsID} Event={singleEvent} Categories={categoriesList}/>
                 )  }
                 
             </ul>
