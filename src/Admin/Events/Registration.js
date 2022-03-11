@@ -73,10 +73,10 @@ const Registration = (props) => {
             <div style={{ display: 'flex', height: '500px', width:'1000px' }}>
                 
               <div style={{ flexGrow: 1 }}>
-              <DataGrid columns={columns} rows={data} getRowId={(row) => row.RegistrationID}  
+              <DataGrid columns={columns} key="RegistrationID" rows={data} getRowId={(row) => row.RegistrationID}  
                 onRowClick={(row, event) => {
                   if (!event.ignore) {
-                    history.push("/admin/events/edit/registration/" + eventid + '/' + row.RegistrationID)
+                    history.push("/admin/events/edit/registration/" + eventid + '/' + row.row.RegistrationID)
                   }
                 }}
                 components={{Toolbar: GridToolbar,}} 

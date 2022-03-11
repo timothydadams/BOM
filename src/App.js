@@ -16,31 +16,19 @@ export default function App() {
   return(  
   <BrowserRouter>
     <div>
-
       <NavBar/>
-
       <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
-
           <SideNav/> 
-
         </div>
-        
       <div id="layoutSidenav_content">
         <main>
-            
           <Banner/>
-
           <Routes/> 
-
         </main>
-
         <Footer/>
-      
       </div>
-
     </div> 
-    
     </div> 
   </BrowserRouter>
   )

@@ -26,7 +26,31 @@ export default function EventsEditForm(){
     BP_Gender:'No Restrictions',
     BP_AgeGradeRestrictions:'',
     BP_AgeGrade:'',
-    BP_Description:''
+    BP_Description:'',
+    BP_NCBMManaged:false,
+    BP_ContactName:'',
+    BP_ContactEmail:'',
+    BP_SendContactAdminEmail:false,
+    BP_ContactPhone:'',
+    BP_Coordinator:'',
+    BP_ShowCoordinatorPhone:false,
+    BP_ShowCoordinatorEmail:false,
+    BP_SendCoordinatorEmail:false,
+    BP_Administrator:'',
+    BP_ShowAdministratorPhone:false,
+    BP_ShowAdministratorEmail:false,
+    BP_SendAdministratorEmail:false,
+    BP_ButtonText:'',
+    BP_ThankYouMessage:'', 
+    BP_PendingApprovalMessage:'',
+    BP_ApprovalMessage:'',
+    BP_DeniedApprovalMessage:'',
+    BP_BGCheckMessage:'',
+    BP_RequiredShots:false, 
+    BP_Private:false, 
+    BP_PrivateURL:'',
+    BP_RequireCheckin:false, 
+    BP_RequireCheckinPhoto:false,
   });
 
   const params = useParams();
@@ -38,7 +62,9 @@ export default function EventsEditForm(){
   const [categoriesList, setCategoriesList] = useState([]);
   const [partnershipsList, setPartnershipsList] = useState([]);
   const [accountingCodesList, setAccountingCodesList] = useState([]);
-  
+  const ageGradeRestrictionsList = [{name:"No Restrictions", value:"(none)" }, {name:"Age", value:"Age"}, {name:"Grade", value:"Grade"}]
+  const [eventCoordinators, setEventCoordinators] = useState([]);
+
     useEffect(() => {
       const fetchData = async () => {
         setIsLoading(true);
@@ -76,13 +102,15 @@ export default function EventsEditForm(){
         axios.all([
           axios.get('https://bomreactapi.azurewebsites.net/events/getcategories'),
           axios.get('https://bomreactapi.azurewebsites.net/events/getpartnerships'),
-          axios.get('https://bomreactapi.azurewebsites.net/events/getaccountingcodes')
+          axios.get('https://bomreactapi.azurewebsites.net/events/getaccountingcodes'),
+          axios.get('https://bomreactapi.azurewebsites.net/events/getcoordinators')
         ])
         .then(responseArr => {
           //this will be executed only when all requests are complete
           setCategoriesList(responseArr[0].data);
           setPartnershipsList(responseArr[1].data);
           setAccountingCodesList(responseArr[2].data);
+          setEventCoordinators(responseArr[3].data);
         });
      }
    
@@ -108,6 +136,10 @@ export default function EventsEditForm(){
       console.log(input);
       setFields({...bomEvent, BP_AccountingCode: input.value});
       //setFields({ ['BP_AccountingCode']: input.value});
+    }
+
+    const handleAgeGradeRestrictionsChange = input=>{
+      setFields({...bomEvent, BP_AgeGradeRestrictions: input.value});
     }
 
     function handleCheckboxChange(input){
@@ -258,11 +290,16 @@ return (
         <small className="form-text text-muted">If selected, this restriction will display under the event details.</small> </div>
     </div>
     <div className="col-md-6">
+      <label>Age or Grade Restrictions</label>
+      <Select options={ageGradeRestrictionsList} onChange={handleAgeGradeRestrictionsChange} getOptionLabel={options=>options["name"]} getOptionValue={options=>options["value"]} className="DropDownField" value={ageGradeRestrictionsList.find(item => item.value === bomEvent.BP_AgeGradeRestrictions)} />
+    </div>
+    { bomEvent.BP_AgeGradeRestrictions !== '(none)' ? 
+    <div className="col-md-6">
       <div className="form-group">
         <label id="m_c_ctl02_BP_AgeGradeRestrictions_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_AgeGradeRestrictions_txtBetween">Range for Valid Ages or Grades</label>
         <div className="row">
           <div className="col-5">
-            <input name="m$c$ctl02$BP_AgeGradeRestrictions$txtBetween" type="text" id="BP_AgeGradeRestrictions" className="form-control" value={bomEvent.BP_AgeGradeRestrictions} onChange={handleFieldChange}/>
+            <input name="m$c$ctl02$BP_AgeGradeRestrictions$txtBetween" type="text" id="BP_AgeGradeRestrictions" className="form-control" value={bomEvent.BP_AgeGrade} onChange={handleFieldChange}/>
           </div>
           <div className="col-2 text-center">to</div>
           <div className="col-5">
@@ -270,7 +307,7 @@ return (
           </div>
         </div>
       </div>
-    </div>
+    </div> : ""}
     <div className="col-md-12">
       <div className="form-group">
         <label id="m_c_ctl02_BP_Description_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_Description_editor">Event Description:</label>
@@ -278,6 +315,104 @@ return (
         <small className="form-text text-muted">Enter a short description/overview for this event.</small> 
       </div>
     </div>
+    <div className="col-md-4 mt-3">
+      <label id="m_c_ctl02_BP_ShowDateOnly_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_ShowDateOnly_checkbox">NCBM Managed</label>
+      <div className="form-check">
+        <input id="BP_NCBMManaged" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_NCBMManaged}  onChange={handleCheckboxChange} />
+        <label className="form-check-label" htmlFor="gridCheck1"></label>
+      </div>
+      <small className="form-text text-muted">If checked, this event will be managed by NCBM.</small> 
+    </div>
+    { 
+    bomEvent.BP_NCBMManaged ? 
+    <div>
+      <div className="col-md-6 mt-3">
+        <label>NCBM Coordinator</label>
+        <Select options={eventCoordinators} />
+      </div>
+      <div className="col-md-4 mt-3">
+      <label id="m_c_ctl02_BP_ShowDateOnly_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_ShowDateOnly_checkbox">Show Coordinator Email</label>
+      <div className="form-check">
+        <input id="BP_ShowCoordinatorEmail" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_ShowCoordinatorEmail}  onChange={handleCheckboxChange} />
+        <label className="form-check-label" htmlFor="gridCheck1"></label>
+      </div>
+      <small className="form-text text-muted">If checked, the coordinators email will show up for front end users.</small> 
+    </div>
+    <div className="col-md-4 mt-3">
+    <label id="m_c_ctl02_BP_ShowDateOnly_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_ShowDateOnly_checkbox">Show Coordinator Phone</label>
+    <div className="form-check">
+      <input id="BP_ShowCoordinatorPhone" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_ShowCoordinatorPhone}  onChange={handleCheckboxChange} />
+      <label className="form-check-label" htmlFor="gridCheck1"></label>
+    </div>
+    <small className="form-text text-muted">If checked, the coordinators phone number will show up for front end users.</small> 
+  </div>
+  <div className="col-md-4 mt-3">
+  <label id="m_c_ctl02_BP_ShowDateOnly_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_ShowDateOnly_checkbox">Send Coordinator Email</label>
+  <div className="form-check">
+    <input id="BP_SendCoordinatorEmail" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_SendCoordinatorEmail}  onChange={handleCheckboxChange} />
+    <label className="form-check-label" htmlFor="gridCheck1"></label>
+  </div>
+  <small className="form-text text-muted">If checked, emails will be sent to the coordinator when users sign up.</small> 
+</div>
+<div className="col-md-4 mt-3">
+        <label>NCBM Adminstrator</label>
+        <Select options={eventCoordinators} />
+  </div>    
+  <div className="col-md-4 mt-3">
+      <label id="m_c_ctl02_BP_ShowDateOnly_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_ShowDateOnly_checkbox">Show Administrator Email</label>
+      <div className="form-check">
+        <input id="BP_ShowAdministratorEmail" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_ShowAdministratorEmail}  onChange={handleCheckboxChange} />
+        <label className="form-check-label" htmlFor="gridCheck1"></label>
+      </div>
+      <small className="form-text text-muted">If checked, the administrators email will show up for front end users.</small> 
+    </div>
+    <div className="col-md-4 mt-3">
+    <label id="m_c_ctl02_BP_ShowDateOnly_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_ShowDateOnly_checkbox">Show Administrator Phone</label>
+    <div className="form-check">
+      <input id="BP_ShowAdministratorPhone" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_ShowAdministratorPhone}  onChange={handleCheckboxChange} />
+      <label className="form-check-label" htmlFor="gridCheck1"></label>
+    </div>
+    <small className="form-text text-muted">If checked, the administrators phone number will show up for front end users.</small> 
+  </div>
+  <div className="col-md-4 mt-3">
+  <label id="m_c_ctl02_BP_ShowDateOnly_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_ShowDateOnly_checkbox">Send Administrator Email</label>
+  <div className="form-check">
+    <input id="BP_SendAdministratorEmail" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_SendAdministratorEmail}  onChange={handleCheckboxChange} />
+    <label className="form-check-label" htmlFor="gridCheck1"></label>
+  </div>
+  <small className="form-text text-muted">If checked, emails will be sent to the administrator when users sign up.</small> 
+</div>
+</div>
+    : 
+    <div>
+      <div className="col-md-4 mt-3">
+        <div className="form-group">
+        <label id="m_c_ctl02_BP_Address_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_Address_txtText">Contact Name</label>
+        <input name="m$c$ctl02$BP_Address$txtText" type="text" id="BP_ContactName" className="form-control controls BPAddressControl pac-target-input" value={bomEvent.BP_ContactName} onChange={handleFieldChange}/>
+        <small className="form-text text-muted">Provide contact name.</small> </div>
+      </div>
+      <div className="col-md-4 mt-3">
+        <div className="form-group">
+        <label id="m_c_ctl02_BP_Address_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_Address_txtText">Contact Phone</label>
+        <input name="m$c$ctl02$BP_Address$txtText" type="text" id="BP_ContactPhone" className="form-control controls BPAddressControl pac-target-input" value={bomEvent.BP_ContactPhone} onChange={handleFieldChange}/>
+        <small className="form-text text-muted">Provide contact phone number.</small> </div>
+      </div>
+      <div className="col-md-4 mt-3">
+        <div className="form-group">
+        <label id="m_c_ctl02_BP_Address_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_Address_txtText">Contact Email</label>
+        <input name="m$c$ctl02$BP_Address$txtText" type="text" id="BP_ContactEmail" className="form-control controls BPAddressControl pac-target-input" value={bomEvent.BP_ContactEmail} onChange={handleFieldChange}/>
+        <small className="form-text text-muted">Provide contact email.</small> </div>
+      </div>
+      <div className="col-md-4 mt-3">
+        <label id="m_c_ctl02_BP_ShowDateOnly_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_ShowDateOnly_checkbox">Send Contact Admin Email</label>
+        <div className="form-check">
+          <input id="BP_SendContactAdminEmail" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_SendContactAdminEmail}  onChange={handleCheckboxChange} />
+          <label className="form-check-label" htmlFor="gridCheck1"></label>
+        </div>
+        <small className="form-text text-muted">If checked, emails will be sent to the contact administrator for this event.</small> 
+      </div>
+    </div>
+    }
   </div>
 </div>
 </div>

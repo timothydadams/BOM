@@ -97,8 +97,8 @@ const GetEvents = (props) => {
     { field: 'BP_Categories', headerName:'Categories', width:300,
     renderCell: (cellValues) => {
       let returnVal ='';
-      let splitVals = cellValues.value.split(';');
-      splitVals.map((catid) => 
+      let splitVals = cellValues?.value?.split(';');
+      splitVals?.map((catid) => 
       {
           let cat = categoriesList?.find(x=> x.CategoryID == catid);
           returnVal += cat?.CategoryDisplayName;
