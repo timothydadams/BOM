@@ -27,6 +27,7 @@ import AdminLogin from '../Admin/Pages/Login'
 //frontend routes
 import EventCheckIn from '../Client/FrontEnd/Forms/Profile/EventCheckIn';
 import EventsAndOpportunities from "../Client/Pages/Profile/EventsAndOpportunities"
+import Register from "../Client/Pages/Profile/Register"
 import Profile from "../Client/Pages/Profile/Profile"
 import Login from '../Client/Pages/Login'
 import CreateAccount from "../Client/Pages/CreateAccount"
@@ -44,6 +45,7 @@ const Routes = () => {
         <ProtectedRoute exact path="/admin/events" component={Events}/>
         <ProtectedRoute exact path="/admin/events/create" component={CreateEditEvent} />
         <ProtectedRoute exact path="/admin/events/edit/:eventid" component={CreateEditEvent}/>
+        <ProtectedRoute exact path="/admin/events/edit/general/:eventid" component={CreateEditEvent}/>
         <ProtectedRoute exact path="/admin/events/edit/registration/:eventid" component={RegistrationView}/>
         <ProtectedRoute exact path="/admin/events/edit/registration/:eventid/:registrationid" component={RegistrationForm}/>
         <ProtectedRoute exact path="/admin/events/edit/registration/add/:eventid" component={RegistrationForm}/>
@@ -77,7 +79,7 @@ const Routes = () => {
           <EventsAndOpportunities/>
       </Route>
       <Route exact path='/events/register/:eventid'>
-          <EventsAndOpportunities/>
+          <Register/>
       </Route>
 
       <Route exact path='/makepayment'>

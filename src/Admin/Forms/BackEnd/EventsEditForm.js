@@ -1,9 +1,14 @@
 import React, { useState, useEffect, Component, useRef } from "react"
-import { useSnackbar } from 'notistack';
+import { useSnackbar } from 'notistack'
 import Select from 'react-select'
 import axios from "axios"
 import {useParams , NavLink} from "react-router-dom"
-import ReactInputDateMask from 'react-input-date-mask'
+import EventTabs from "../../Events/EventTabs"
+import TextField from '@mui/material/TextField'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import DateTimePicker from '@mui/lab/DateTimePicker'
+import DatePicker from '@mui/lab/DatePicker'
 import { Editor } from '@tinymce/tinymce-react'
 
 
@@ -13,9 +18,9 @@ export default function EventsEditForm(){
   const [bomEvent, setFields] = useState({
     EventsID: 0,
     BP_Title: '',
-    BP_Partnership: '',
-    BP_AccountingCode: '',
-    BP_Categories:null,
+    BP_Partnership: 0,
+    BP_AccountingCode: 0,
+    BP_Categories:[],
     BP_Address:'',
     BP_StartDate:'',
     BP_EndDate:'',
@@ -23,7 +28,7 @@ export default function EventsEditForm(){
     BP_ShowEndTime:false,
     BP_DatesFlexible:false,
     BP_Overnight:'',
-    BP_Gender:'No Restrictions',
+    BP_Gender:'',
     BP_AgeGradeRestrictions:'',
     BP_AgeGrade:'',
     BP_Description:'',
@@ -72,11 +77,12 @@ export default function EventsEditForm(){
             const result = await axios(
               'https://bomreactapi.azurewebsites.net/events/geteventsinfo?eventid=' + eventid,
             );
-          //alert(JSON.stringify(fields));
-          //console.log(JSON.stringify(result.data));
+
           if(result.data)
           {
             setFields(result.data);
+            console.log('Accounting Code after load: ',result.data['BP_AccountingCode']);
+            console.log('Partnership after load: ',result.data['BP_Partnership']);
           }
           //alert(JSON.stringify(fields));
           enqueueSnackbar('Event fetch success');
@@ -103,39 +109,32 @@ export default function EventsEditForm(){
           axios.get('https://bomreactapi.azurewebsites.net/events/getcategories'),
           axios.get('https://bomreactapi.azurewebsites.net/events/getpartnerships'),
           axios.get('https://bomreactapi.azurewebsites.net/events/getaccountingcodes'),
-          axios.get('https://bomreactapi.azurewebsites.net/events/getcoordinators')
+         // axios.get('https://bomreactapi.azurewebsites.net/events/getcoordinators')
         ])
         .then(responseArr => {
           //this will be executed only when all requests are complete
           setCategoriesList(responseArr[0].data);
           setPartnershipsList(responseArr[1].data);
           setAccountingCodesList(responseArr[2].data);
-          setEventCoordinators(responseArr[3].data);
+          //setEventCoordinators(responseArr[3].data);
         });
      }
    
-    //68;65;19;44
-    //build lists for dropdown selects
-    
-    const eventTabs = [{title: 'General', value: 'General'}, {title:'Registration', value: 'Registration'}, {title:'Optional Costs', value: 'Optional Costs'}, {title:'Status', value: 'Status'}];
   
 
     const handleCategoriesChange = option => {
-     console.log(option);
-     setFields({...bomEvent, BP_Categories: option});
-     console.log(JSON.stringify(bomEvent.BP_Categories));
+     console.log('Categories field value on change: ',option);
+     setFields({...bomEvent, BP_Categories : Array.isArray(option) ? option.map(x=> x.value) : []});
     }
     
-    const handlePartnershipsChange = input => {
-      console.log(input);
-      setFields({...bomEvent, BP_Partnership: input.value});
-      //setFields({ ['BP_Partnership']: input.value});
+    const handlePartnershipsChange = option => {
+      console.log('Partnership field value on change: ',option.ItemID);
+      setFields({...bomEvent, BP_Partnership : option.ItemID });
     }
 
-    const handleAccountingCodesChange = input => {
-      console.log(input);
-      setFields({...bomEvent, BP_AccountingCode: input.value});
-      //setFields({ ['BP_AccountingCode']: input.value});
+    const handleAccountingCodesChange = option => {
+      console.log('Accounting codes field value on change: ',option.ItemID);
+      setFields({...bomEvent, BP_AccountingCode : option.ItemID });
     }
 
     const handleAgeGradeRestrictionsChange = input=>{
@@ -151,6 +150,16 @@ export default function EventsEditForm(){
           [name]: value
         });
     }
+
+    function handleStartDateChange(value){
+      setFields({...bomEvent, BP_StartDate: value});
+    }
+
+    function handleEndDateChange(value){
+      setFields({...bomEvent, BP_EndDate: value});
+    }
+
+
 
     //handlefieldchange
     function handleFieldChange(input){
@@ -169,19 +178,18 @@ export default function EventsEditForm(){
     }
   
     const handleSubmit = async e => {
+      console.log('Accounting Code: ',bomEvent.BP_AccountingCode);
+      console.log('Partnership: ',bomEvent.BP_Partnership);
+      console.log('Categories: ',bomEvent.BP_Categories);
         e.preventDefault();
-
-        console.log(JSON.stringify(bomEvent));
-
-        let response = await axios.post('https://bomreactapi.azurewebsites.net/events/save', bomEvent )
-        
-        if (response) {
-          //get new token stuff
+        axios.post('https://bomreactapi.azurewebsites.net/events/save', bomEvent )
+        .then(response => {
+          console.log(response);
           enqueueSnackbar("Event Saved");
-        } else {
+        }).catch(err => {
+          console.log(err);
           enqueueSnackbar(error.message);
-        }
-
+        })
   }
 
 
@@ -192,7 +200,7 @@ return (
 <div className="row">
   <div className="eventTabs">  
   <ul className="nav nav-pills" > 
-    {eventTabs.map(d => (<li className="nav-item"><NavLink className="nav-link" to={ eventid != undefined ? d.title + '/' + eventid : ''}>{d.title}</NavLink></li> ))}  
+    {EventTabs?.map(d => (<li className="nav-item"><NavLink className="nav-link" to={ eventid != undefined ? '/admin/events/edit/' + d.name + '/' + eventid : ''}>{d.name}</NavLink></li> ))}  
   </ul>
   </div>
   </div>
@@ -218,13 +226,13 @@ return (
     <div className="col-md-6">
       <div className="form-group">
         <label id="m_c_ctl02_BP_Partnership_lb" className="required-caption" htmlFor="m_c_ctl02_BP_Partnership_drpSingleSelect">Partnership</label>
-        <Select placeholder="Select Partnership" options={partnershipsList} getOptionLabel={options=>options["Name"]} getOptionValue={options=>options["ItemID"]} name="m$c$ctl02$BP_Partnership$drpSingleSelect" id="BP_Partnership" className="DropDownField" value={partnershipsList.find(item => item.value === bomEvent.BP_Partnership)} onChange={handlePartnershipsChange} />
+        <Select placeholder="Select Partnership" options={partnershipsList} getOptionLabel={options=>options["Name"]} getOptionValue={options=>options["ItemID"]} name="m$c$ctl02$BP_Partnership$drpSingleSelect" id="BP_Partnership" className="DropDownField" value={partnershipsList.find(item => item.value == bomEvent.BP_Partnership)} onChange={handlePartnershipsChange} />
         <small className="form-text text-muted">Select partnership if event is associated with one.</small> </div>
     </div>
     <div className="col-md-6">
       <div className="form-group">
-        <label id="m_c_ctl02_BP_AccountingCode_lb" className="required-caption" htmlFor="m_c_ctl02_BP_AccountingCode_dropDownList">Accounting Code</label>
-        <Select placeholder="Select Accounting Code" options={accountingCodesList} getOptionLabel={options=>options["Name"]} getOptionValue={options=>options["ItemID"]} name="m$c$ctl02$BP_AccountingCode$dropDownList" id="BP_AccountingCode" className="DropDownField" value={accountingCodesList.find(item => item.value === bomEvent.BP_AccountingCode)} onChange={handleAccountingCodesChange} />
+        <label id="m_c_ctl02_BP_AccountingCode_lb" className="required-caption" htmlFor="m_c_ctl02_BP_AccountingCode_dropDownList">Accounting Code</label> 
+        <Select placeholder="Select Accounting Code" options={accountingCodesList} getOptionLabel={options=>options["Name"]} getOptionValue={options=>options["ItemID"]} name="m$c$ctl02$BP_AccountingCode$dropDownList" id="BP_AccountingCode" className="DropDownField" value={accountingCodesList.find(item => item.value == bomEvent.BP_AccountingCode)} onChange={handleAccountingCodesChange} />
         <small className="form-text text-muted">This is used for accounts receivables to apply the money to this event.</small> </div>
     </div>
     <div className="col-md-6">
@@ -239,32 +247,74 @@ return (
         <input name="m$c$ctl02$BP_Address$txtText" type="text" id="BP_Address" className="form-control controls BPAddressControl pac-target-input" value={bomEvent.BP_Address} onChange={handleFieldChange}/>
         <small className="form-text text-muted">Provide event location.</small> </div>
     </div>
-    <div className="col-md-6">
-      <label id="m_c_ctl02_BP_StartDate_lb" className="required-caption" htmlFor="m_c_ctl02_BP_StartDate_timePicker_txtDateTime">Event Start Date/Time</label>
-      <ReactInputDateMask className="form-control" id="BP_StartDate" mask='dd/mm/yyyy' showMaskOnHover={false} value={bomEvent.BP_StartDate} onChange={handleFieldChange}/>
-      <small className="form-text text-muted">Enter the event start date/time.</small> </div>
-    <div className="col-md-6">
-      <label id="m_c_ctl02_BP_EndDate_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_EndDate_timePicker_txtDateTime">Event End Date/Time</label>
-      <ReactInputDateMask className="form-control" id="BP_EndDate" mask='dd/mm/yyyy' showMaskOnHover={false} value={bomEvent.BP_EndDate} onChange={handleFieldChange}/>
-      <small className="form-text text-muted">Enter the event end date/time.</small> </div>
+
     <div className="col-md-4 mt-3">
       <label id="m_c_ctl02_BP_ShowDateOnly_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_ShowDateOnly_checkbox">Show Date Only</label>
       <div className="form-check">
-        <input id="BP_ShowDateOnly" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_ShowDateOnly}  onChange={handleCheckboxChange} />
+        <input id="BP_ShowDateOnly" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_ShowDateOnly} checked={bomEvent.BP_ShowDateOnly}  onChange={handleCheckboxChange} />
         <label className="form-check-label" htmlFor="gridCheck1"></label>
       </div>
       <small className="form-text text-muted">If checked, the date will only be shown.</small> </div>
+   
+      { bomEvent.BP_ShowDateOnly === true ? 
+      <div className='row'>
+       <div className="col-md-6">
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <DatePicker
+        renderInput={(props) => <TextField id='BP_StartDate' {...props} />}
+        label="Event Start Date/Time"
+        value={bomEvent.BP_StartDate}
+        onChange={handleStartDateChange}
+      />
+    </LocalizationProvider>
+    <small className="form-text text-muted">Enter the event start date/time.</small> </div>
+  <div className="col-md-6">
+  <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <DatePicker
+        renderInput={(props) => <TextField id='BP_EndDate' {...props} />}
+        label="Event End Date/Time"
+        value={bomEvent.BP_EndDate}
+        onChange={handleEndDateChange}
+      />
+    </LocalizationProvider>
+    <small className="form-text text-muted">Enter the event end date/time.</small> </div>
+    </div>
+     : 
+     <div className='row'>
+     <div className="col-md-6">
+     <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <DateTimePicker
+          renderInput={(props) => <TextField id='BP_StartDate' {...props} />}
+          label="Event Start Date/Time"
+          value={bomEvent.BP_StartDate}
+          onChange={handleStartDateChange}
+        />
+      </LocalizationProvider>
+      <small className="form-text text-muted">Enter the event start date/time.</small> </div>
+    <div className="col-md-6">
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <DateTimePicker
+          renderInput={(props) => <TextField id='BP_EndDate' {...props} />}
+          label="Event End Date/Time"
+          value={bomEvent.BP_EndDate}
+          onChange={handleEndDateChange}
+        />
+      </LocalizationProvider>
+      <small className="form-text text-muted">Enter the event end date/time.</small> </div>
+      </div>
+     }
+      
     <div className="col-md-4 mt-3">
       <label id="m_c_ctl02_BP_ShowEndTime_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_ShowEndTime_checkbox">Show End Date</label>
       <div className="form-check">
-        <input id="BP_ShowEndTime" type="checkbox" name="m$c$ctl02$BP_ShowEndTime$checkbox" value={bomEvent.BP_ShowEndTime}  onChange={handleCheckboxChange}/>
+        <input id="BP_ShowEndTime" type="checkbox" name="m$c$ctl02$BP_ShowEndTime$checkbox" value={bomEvent.BP_ShowEndTime} checked={bomEvent.BP_ShowEndTime}  onChange={handleCheckboxChange}/>
         <label className="form-check-label" htmlFor="gridCheck1"></label>
       </div>
       <small className="form-text text-muted">If checked, the end date will show to users.</small> </div>
     <div className="col-md-4 mt-3">
       <label id="m_c_ctl02_BP_DatesFlexible_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_DatesFlexible_checkbox">Dates Flexible</label>
       <div className="form-check">
-        <input id="BP_DatesFlexible" type="checkbox" name="m$c$ctl02$BP_DatesFlexible$checkbox" value={bomEvent.BP_DatesFlexible}  onChange={handleCheckboxChange}/>
+        <input id="BP_DatesFlexible" type="checkbox" name="m$c$ctl02$BP_DatesFlexible$checkbox" value={bomEvent.BP_DatesFlexible} checked={bomEvent.BP_DatesFlexible}  onChange={handleCheckboxChange}/>
         <label className="form-check-label" htmlFor="gridCheck1"></label>
       </div>
       <small className="form-text text-muted">If checked, allows attendee to select dates.</small> </div>
@@ -318,7 +368,7 @@ return (
     <div className="col-md-4 mt-3">
       <label id="m_c_ctl02_BP_ShowDateOnly_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_ShowDateOnly_checkbox">NCBM Managed</label>
       <div className="form-check">
-        <input id="BP_NCBMManaged" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_NCBMManaged}  onChange={handleCheckboxChange} />
+        <input id="BP_NCBMManaged" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_NCBMManaged} checked={bomEvent.BP_NCBMManaged}   onChange={handleCheckboxChange} />
         <label className="form-check-label" htmlFor="gridCheck1"></label>
       </div>
       <small className="form-text text-muted">If checked, this event will be managed by NCBM.</small> 
@@ -333,7 +383,7 @@ return (
       <div className="col-md-4 mt-3">
       <label id="m_c_ctl02_BP_ShowDateOnly_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_ShowDateOnly_checkbox">Show Coordinator Email</label>
       <div className="form-check">
-        <input id="BP_ShowCoordinatorEmail" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_ShowCoordinatorEmail}  onChange={handleCheckboxChange} />
+        <input id="BP_ShowCoordinatorEmail" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_ShowCoordinatorEmail}  checked={bomEvent.BP_ShowCoordinatorEmail} onChange={handleCheckboxChange} />
         <label className="form-check-label" htmlFor="gridCheck1"></label>
       </div>
       <small className="form-text text-muted">If checked, the coordinators email will show up for front end users.</small> 
@@ -341,7 +391,7 @@ return (
     <div className="col-md-4 mt-3">
     <label id="m_c_ctl02_BP_ShowDateOnly_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_ShowDateOnly_checkbox">Show Coordinator Phone</label>
     <div className="form-check">
-      <input id="BP_ShowCoordinatorPhone" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_ShowCoordinatorPhone}  onChange={handleCheckboxChange} />
+      <input id="BP_ShowCoordinatorPhone" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_ShowCoordinatorPhone} checked={bomEvent.BP_ShowCoordinatorPhone}  onChange={handleCheckboxChange} />
       <label className="form-check-label" htmlFor="gridCheck1"></label>
     </div>
     <small className="form-text text-muted">If checked, the coordinators phone number will show up for front end users.</small> 
@@ -349,7 +399,7 @@ return (
   <div className="col-md-4 mt-3">
   <label id="m_c_ctl02_BP_ShowDateOnly_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_ShowDateOnly_checkbox">Send Coordinator Email</label>
   <div className="form-check">
-    <input id="BP_SendCoordinatorEmail" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_SendCoordinatorEmail}  onChange={handleCheckboxChange} />
+    <input id="BP_SendCoordinatorEmail" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_SendCoordinatorEmail} checked={bomEvent.BP_SendCoordinatorEmail} onChange={handleCheckboxChange} />
     <label className="form-check-label" htmlFor="gridCheck1"></label>
   </div>
   <small className="form-text text-muted">If checked, emails will be sent to the coordinator when users sign up.</small> 
@@ -361,7 +411,7 @@ return (
   <div className="col-md-4 mt-3">
       <label id="m_c_ctl02_BP_ShowDateOnly_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_ShowDateOnly_checkbox">Show Administrator Email</label>
       <div className="form-check">
-        <input id="BP_ShowAdministratorEmail" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_ShowAdministratorEmail}  onChange={handleCheckboxChange} />
+        <input id="BP_ShowAdministratorEmail" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_ShowAdministratorEmail} checked={bomEvent.BP_ShowAdministratorEmail}  onChange={handleCheckboxChange} />
         <label className="form-check-label" htmlFor="gridCheck1"></label>
       </div>
       <small className="form-text text-muted">If checked, the administrators email will show up for front end users.</small> 
@@ -369,7 +419,7 @@ return (
     <div className="col-md-4 mt-3">
     <label id="m_c_ctl02_BP_ShowDateOnly_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_ShowDateOnly_checkbox">Show Administrator Phone</label>
     <div className="form-check">
-      <input id="BP_ShowAdministratorPhone" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_ShowAdministratorPhone}  onChange={handleCheckboxChange} />
+      <input id="BP_ShowAdministratorPhone" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_ShowAdministratorPhone} checked={bomEvent.BP_ShowAdministratorPhone}  onChange={handleCheckboxChange} />
       <label className="form-check-label" htmlFor="gridCheck1"></label>
     </div>
     <small className="form-text text-muted">If checked, the administrators phone number will show up for front end users.</small> 
@@ -377,7 +427,7 @@ return (
   <div className="col-md-4 mt-3">
   <label id="m_c_ctl02_BP_ShowDateOnly_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_ShowDateOnly_checkbox">Send Administrator Email</label>
   <div className="form-check">
-    <input id="BP_SendAdministratorEmail" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_SendAdministratorEmail}  onChange={handleCheckboxChange} />
+    <input id="BP_SendAdministratorEmail" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_SendAdministratorEmail} checked={bomEvent.BP_SendAdministratorEmail}  onChange={handleCheckboxChange} />
     <label className="form-check-label" htmlFor="gridCheck1"></label>
   </div>
   <small className="form-text text-muted">If checked, emails will be sent to the administrator when users sign up.</small> 
@@ -406,7 +456,7 @@ return (
       <div className="col-md-4 mt-3">
         <label id="m_c_ctl02_BP_ShowDateOnly_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_ShowDateOnly_checkbox">Send Contact Admin Email</label>
         <div className="form-check">
-          <input id="BP_SendContactAdminEmail" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_SendContactAdminEmail}  onChange={handleCheckboxChange} />
+          <input id="BP_SendContactAdminEmail" type="checkbox" name="m$c$ctl02$BP_ShowDateOnly$checkbox" value={bomEvent.BP_SendContactAdminEmail} checked={bomEvent.BP_SendContactAdminEmail}  onChange={handleCheckboxChange} />
           <label className="form-check-label" htmlFor="gridCheck1"></label>
         </div>
         <small className="form-text text-muted">If checked, emails will be sent to the contact administrator for this event.</small> 

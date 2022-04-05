@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import { useSnackbar } from 'notistack';
 import axios from "axios"
+import EventTabs from "../../Events/EventTabs";
 import { Editor } from '@tinymce/tinymce-react'
 import {useParams, NavLink} from "react-router-dom"
 
@@ -89,7 +90,7 @@ return (
 <form onSubmit={handleSubmit}>
   <div className="eventTabs">  
   <ul className="nav nav-pills"> 
-  {eventTabs.map(d => (<li className="nav-item"><NavLink className="nav-link" to={ eventid != undefined ? d.title + '/' + eventid : ''}>{d.title}</NavLink></li> ))} 
+  {EventTabs.map(d => (<li className="nav-item"><NavLink className="nav-link" to={ eventid != undefined ? '/admin/events/edit/' + d.name + '/' + eventid : ''}>{d.name}</NavLink></li> ))} 
   </ul>
   </div>
   <div className="full-row gray">
@@ -109,6 +110,7 @@ return (
       </div>
       <small className="form-text text-muted"></small> 
       </div>
+      { bomEvent.BP_Filled ? 
       <div className="col-md-12">
       <div className="form-group">
         <label id="m_c_ctl02_BP_Description_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_Description_editor">Filled Text</label>
@@ -116,6 +118,7 @@ return (
         <small className="form-text text-muted">Enter the text you want to show when the event is filled.</small> 
       </div>
         </div>
+        : "" }
       <div className="col-md-4 mt-3">
       <label id="m_c_ctl02_BP_DatesFlexible_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_DatesFlexible_checkbox">Event Reserved</label>
       <div className="form-check">
@@ -124,6 +127,7 @@ return (
       </div>
       <small className="form-text text-muted"></small> 
       </div>
+      { bomEvent.BP_Reserved ?
       <div className="col-md-12">
       <div className="form-group">
         <label id="m_c_ctl02_BP_Description_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_Description_editor">Reserve Instructions</label>
@@ -131,6 +135,7 @@ return (
         <small className="form-text text-muted">Enter the instructions that you want to show to users.</small> 
       </div>
         </div>
+        : "" }
 </div>
 </div>
 
