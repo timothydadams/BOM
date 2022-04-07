@@ -38,7 +38,17 @@ return(
                   </div>
                 </div>
                 <div className="col-lg-2 col-6"><a role="button" aria-controls={props.Event.EventsID + '-content'} className="collapsed view-details-link">View Details <i className="fa" aria-hidden="true"></i></a></div>
-                <div className="col-lg-2 col-6">{props.Event.BP_Reserved ? <NavLink to={"/events/register/" + props.Event.EventsID} className="event-button reserved">Reserved <i className="fas fa-check"></i></NavLink> : <NavLink to={"/events/register/" + props.Event.EventsID} className="event-button">Register <i className="fas fa-chevron-right"></i></NavLink> }</div>
+                <div className="col-lg-2 col-6">{props.Event.BP_Reserved ? <NavLink to={
+       {     
+         pathname: "/events/details/" + props.Event.EventsID,
+         state:props.Event
+        }
+  } className="event-button reserved">Reserved <i className="fas fa-check"></i></NavLink> : <NavLink to={
+    {     
+      pathname: "/events/details/" + props.Event.EventsID,
+      state:props.Event
+     }
+} className="event-button">Register <i className="fas fa-chevron-right"></i></NavLink> }</div>
               </div>
         </AccordionSummary>
         <AccordionDetails>

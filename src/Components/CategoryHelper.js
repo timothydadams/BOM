@@ -15,8 +15,8 @@ const CategoryHelper = (props) => {
     }
 
     return(
-        catStrings.map((catString) => {
-           return <li>{catString}</li>
+        catStrings.map((catString,i) => {
+           return <li key={i}>{catString}</li>
         })
     )
 }

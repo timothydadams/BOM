@@ -57,7 +57,7 @@ const GetEvents = (props) => {
 
   const viewAttendees = (event, cellValues) => {
     
-    history.push('/admin/events/attendees/' + cellValues.row["EventsID"]);
+    history.push('/admin/events/viewattendees/' + cellValues.row["EventsID"]);
   };
 
   const columns = [

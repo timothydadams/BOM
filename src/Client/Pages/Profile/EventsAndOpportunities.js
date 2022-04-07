@@ -24,13 +24,13 @@ const EventsAndOpportunities = (props) => {
       try{
           const categoriesResult = await axios('https://bomreactapi.azurewebsites.net/events/getcategories');
           setCategoriesList(categoriesResult.data);
-          console.log('categories list fetched from api: ',categoriesResult.data);
+          //console.log('categories list fetched from api: ',categoriesResult.data);
 
           const result = await axios(
             'https://bomreactapi.azurewebsites.net/events/getevents',
           );
           setData(result.data);
-          console.log(result.data);
+          //console.log(result.data);
       }
         catch(error){
         setError(true)
