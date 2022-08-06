@@ -15,10 +15,8 @@ const Registration = (props) => {
     const history = useHistory();
     const [bomEvent, setEvent] = useState({});
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-    const params = useParams();
-
-    const eventid = params.eventid;
-    console.log(params.eventid);
+    let { eventid } = useParams();
+    console.log('registrations eventid: ', eventid);
 
     const columns = [
         { field: 'RegistrationID', headerName: 'ID', width:200 },
@@ -69,14 +67,14 @@ const Registration = (props) => {
         <div>Loading ...</div>
           ) : (
             <div>
-                <NavLink className="btn" to={"/admin/events/edit/registration/add/" + eventid}>Add Registration</NavLink>
+                <NavLink className="btn btn-primary" to={"/admin/events/registration/add/" + eventid }>Add Registration</NavLink>
             <div style={{ display: 'flex', height: '500px', width:'1000px' }}>
                 
               <div style={{ flexGrow: 1 }}>
               <DataGrid columns={columns} key="RegistrationID" rows={data} getRowId={(row) => row.RegistrationID}  
                 onRowClick={(row, event) => {
                   if (!event.ignore) {
-                    history.push("/admin/events/edit/registration/" + eventid + '/' + row.row.RegistrationID)
+                    history.push("/admin/events/registration/" + eventid + '/' + row.row.RegistrationID)
                   }
                 }}
                 components={{Toolbar: GridToolbar,}} 

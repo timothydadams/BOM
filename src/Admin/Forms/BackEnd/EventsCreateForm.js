@@ -12,9 +12,10 @@ import DatePicker from '@mui/lab/DatePicker'
 import JoditEditor from "jodit-react"
 
 
-export default function EventsEditForm(){
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+export default function EventsCreateForm(){
   const editor = useRef(null);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   const [categoriesList, setCategoriesList] = useState([]);
   const [partnershipsList, setPartnershipsList] = useState([]);
   const [accountingCodesList, setAccountingCodesList] = useState([]);
@@ -22,9 +23,9 @@ export default function EventsEditForm(){
   const [bomEvent, setFields] = useState({
     EventsID: 0,
     BP_Title: '',
-    BP_Partnership: [partnershipsList[0],partnershipsList[1]],
-    BP_AccountingCode: [accountingCodesList[0],accountingCodesList[1]],
-    BP_Categories:[categoriesList[0],categoriesList[1]],
+    BP_Partnership: [partnershipsList[0], partnershipsList[1]],
+    BP_AccountingCode: [accountingCodesList[0], accountingCodesList[1]],
+    BP_Categories:[categoriesList[0], categoriesList[1]],
     BP_Address:'',
     BP_StartDate:'',
     BP_EndDate:'',
@@ -74,25 +75,8 @@ export default function EventsEditForm(){
 
     useEffect(() => {
       const fetchData = async () => {
+        getSupportingLists();
         setIsLoading(true);
-        try{
-            getSupportingLists();
-            const result = await axios(
-              'https://bomreactapi.azurewebsites.net/events/geteventsinfo?eventid=' + eventid,
-            );
-
-          if(result.data)
-          {
-            setFields(result.data);
-          }
-          //alert(JSON.stringify(fields));
-          enqueueSnackbar('Event fetch success');
-        }
-          catch(error){
-          setError(true);
-          console.log(error);
-          enqueueSnackbar('Event fetch failed');
-        }        
       };
 
       if(!contentLoaded){
@@ -101,12 +85,10 @@ export default function EventsEditForm(){
         setIsLoading(false);
         
       }
-      else{
-        //setCategoriesInitialVal();
-      }
+      
   }, []);
 
- 
+  
      //getSupporting lists for Categories,Partnerships, and Accounting Codes
      function getSupportingLists(){
         // execute simultaneous requests 
@@ -119,15 +101,13 @@ export default function EventsEditForm(){
         .then(responseArr => {
           //this will be executed only when all requests are complete
           setCategoriesList(responseArr[0].data);
-          console.log('categories in response getsupportinglists: ',bomEvent.BP_Categories);
           setPartnershipsList(responseArr[1].data);
-          console.log('partnerships in response getsupportinglists: ', bomEvent.BP_Partnership);
           setAccountingCodesList(responseArr[2].data);
-          console.log('accountingcodes in response getsupportinglists: ', bomEvent.BP_AccountingCode);
           //setEventCoordinators(responseArr[3].data);
         });
      }
-   
+  
+
     const handleCategoriesChange = selectedOption => {
       setFields({...bomEvent, BP_Categories : selectedOption });
       const values = selectedOption.map(opt => opt.value).join(',')
@@ -136,14 +116,10 @@ export default function EventsEditForm(){
     
     const handlePartnershipsChange = selectedOption => {
       setFields({...bomEvent, BP_Partnership : selectedOption });
-      //const values = selectedOption.map(opt => opt.value).join(',')
-      //console.log(values)
     }
 
     const handleAccountingCodesChange = selectedOption => {
       setFields({...bomEvent, BP_AccountingCode : selectedOption });
-      //const values = selectedOption.map(opt => opt.value).join(',')
-      //console.log(values)
     }
 
     const handleAgeGradeRestrictionsChange = input=>{
@@ -193,9 +169,6 @@ export default function EventsEditForm(){
   
     const handleSubmit = async e => {
         e.preventDefault();
-        console.log(bomEvent.BP_Categories);
-        bomEvent.BP_AccountingCode = bomEvent.BP_AccountingCode["ItemID"];
-        bomEvent.BP_Partnership = bomEvent.BP_Partnership["ItemID"];
         console.log(bomEvent);
         axios.post('https://bomreactapi.azurewebsites.net/events/save', bomEvent )
         .then(response => {

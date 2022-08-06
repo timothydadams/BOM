@@ -119,7 +119,7 @@ const UserLinks = (props) => (
             <div className="sb-nav-link-icon"></div>
             Certifications
         </Link> 
-        <Link className={props.location === '/myprofile' ? 'nav-link active' : 'nav-link'} to="/myprofile">
+        <Link className={props.location === '/profile' ? 'nav-link active' : 'nav-link'} to="/profile">
             <div className="sb-nav-link-icon"></div>
             Account Information
         </Link> 

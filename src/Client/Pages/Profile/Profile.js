@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react"
 import { useSnackbar } from 'notistack';
 import Select from 'react-select'
 import axios from "axios"
-import { useParams , useHistory} from "react-router-dom"
+import { useParams , useHistory, useLocation} from "react-router-dom"
 import ReactInputDateMask from 'react-input-date-mask';
 import { useUser } from "../../../Components/Hooks/useUser";
+
+import Tab1 from './Tabs/Tab1'
 
 const MyProfile = (props) => {
   
@@ -125,100 +127,19 @@ const MyProfile = (props) => {
         });
   }
 
-
 return (
 <form onSubmit={handleSubmit}>
-<div className="full-row white">
-<div className="container-fluid">
-<div className="row">
-  <div className="eventTabs">  
-  <ul className="nav nav-pills" > 
-    {userTabs.map(d => (<li className="nav-item"><a className="nav-link" href={ userid != undefined ? d.title + '/' + userid : ''}>{d.title}</a></li> ))}  
-  </ul>
-  </div>
-  </div>
-  </div>
-  </div>
-  <div className="full-row gray">
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-12 text-white py-1"><a className="button-default button-green" onClick={handleSubmit}>Save</a><a className="button-default button-gray mx-3" onClick={handleCancel} >Cancel</a></div>
-      </div>
-    </div>
-  </div>
-<div className="full-row white">
-<div className="container-fluid">
-  <div className="row mt-5">
-    <div className="col-md-6">
-      <div className="form-group">
-        <label id="lblUserName" className="required-caption" htmlFor="UserName">User Name</label>
-        <input name="UserName" type="email" maxLength="200" id="UserName" className="form-control" placeholder="User Name" value={bomUser.UserName} onChange={handleFieldChange} />
-        <small className="form-text text-muted">User Name: must be an email address</small> 
-      </div>
-    </div>
-    <div className="col-md-6">
-      <div className="form-group">
-        <label id="lblFirstName" className="required-caption" htmlFor="FirstName">First Name</label>
-        <input type='text' placeholder="First Name" name="FirstName" id="FirstName" className="form-control" value={bomUser.FirstName} onChange={handleFieldChange} />
-        <small className="form-text text-muted"></small> </div>
-    </div>
-    <div className="col-md-6">
-      <div className="form-group">
-        <label id="lblMiddleName" className="required-caption" htmlFor="MiddleName">Middle Name</label>
-        <input type='text' placeholder="Middle Name" name="MiddleName" id="MiddleName" className="form-control" value={bomUser.MiddleName} onChange={handleFieldChange} />
-        <small className="form-text text-muted"></small> </div>
-    </div>
-    <div className="col-md-6">
-      <div className="form-group">
-      <label id="lblLastName" className="required-caption" htmlFor="LastName">Last Name</label>
-        <input type='text' placeholder="Last Name" name="LastName" id="LastName" className="form-control" value={bomUser.LastName} onChange={handleFieldChange} />
-        <small className="form-text text-muted"></small> </div>
-    </div>
-    <div className="col-md-12">
-      <div className="form-group">
-      <label id="lblFullName" className="required-caption" htmlFor="FullName">Full Name</label>
-        <input type='text' placeholder="Full Name" name="FullName" id="FullName" className="form-control" value={bomUser.FullName} onChange={handleFieldChange} />
-        <small className="form-text text-muted"></small> </div>
-    </div>
-    <div className="col-md-6">
-      <label id="lblBP_DOB" className="required-caption" htmlFor="BP_DOB">Date of Birth</label>
-      <ReactInputDateMask className="form-control" id="BP_DOB" mask='dd/mm/yyyy' showMaskOnHover={false} value={bomUser.BP_DOB} onChange={handleFieldChange}/>
-      <small className="form-text text-muted">Enter the users birth date</small> </div>
-    <div className="col-md-6">
-      <label id="lblUserLastModified" className="control-label editing-form-label" htmlFor="UserLastModified">User Last Modified</label>
-      <ReactInputDateMask className="form-control" id="UserLastModified" mask='dd/mm/yyyy' readOnly={true} showMaskOnHover={false} value={bomUser.UserLastModified} onChange={handleFieldChange}/>
-      <small className="form-text text-muted">Last time user was modified</small> </div>
-    <div className="col-md-4 mt-3">
-      <label id="lblUserEnabled" className="control-label editing-form-label" htmlFor="UserEnabled">User Enabled</label>
-      <div className="form-check">
-        <input id="UserEnabled" type="checkbox" name="UserEnabled" value={bomUser.UserEnabled}  onChange={handleCheckboxChange} />
-        <label className="form-check-label" htmlFor="gridCheck1"></label>
-      </div>
-      <small className="form-text text-muted">If user is not enabled they won't be able to use the website.</small> </div>
-    <div className="col-md-4 mt-3">
-      <label id="lblBP_SubscribeNews" className="control-label editing-form-label" htmlFor="BP_SubscribeNews">Subscribed to Newsletter</label>
-      <div className="form-check">
-        <input id="BP_SubscribeNews" type="checkbox" name="BP_SubscribeNews" value={bomUser.BP_SubscribeNews}  onChange={handleCheckboxChange}/>
-        <label className="form-check-label" htmlFor="gridCheck1"></label>
-      </div>
-      <small className="form-text text-muted">If checked, the user is subscribed to the newsletter</small> </div>
-    <div className="col-md-4 mt-3">
-      <label id="lblBP_SubscribeMag" className="control-label editing-form-label" htmlFor="BP_SubscribeMag">Subscribed to Magazine</label>
-      <div className="form-check">
-        <input id="BP_SubscribeMag" type="checkbox" name="BP_SubscribeMag" value={bomUser.BP_SubscribeMag}  onChange={handleCheckboxChange}/>
-        <label className="form-check-label" htmlFor="gridCheck1"></label>
-      </div>
-      <small className="form-text text-muted">If checked, allows attendee to select dates.</small> </div>
-      <div className="col-md-6">
-      <div className="form-group">
-        <label id="lblPrivilege" className="required-caption" htmlFor="Privilege">Privilege Level</label>
-        <Select placeholder="Select Privilege Level" options={privilegeLevelList} name="Privilege" id="Privilege" className="DropDownField" value={privilegeLevelList.find(item => item.value === bomUser.Privilege)} onChange={handlePrivilegeLevelChange} />
-        <small className="form-text text-muted">Select privilege level for user. This determines what they can access or edit in the site</small> </div>
-    </div>
-  </div>
-</div>
-</div>
-
+<section id="first-tab-group" class="tabgroup">
+        
+        
+        <Tab1/>
+        
+        
+       
+        
+        
+        
+      </section>
 </form>
     );
   }

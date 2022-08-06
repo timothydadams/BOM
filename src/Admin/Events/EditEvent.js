@@ -1,7 +1,7 @@
 import React,{Component} from "react"
 import EventsEditForm from "../Forms/BackEnd/EventsEditForm";
 
-const CreateEditEvent = (props) => {
+const EditEvent = (props) => {
    
     return(
          <EventsEditForm />           
@@ -10,4 +10,4 @@ const CreateEditEvent = (props) => {
     }
 
 
-export default CreateEditEvent
+export default EditEvent

@@ -146,7 +146,7 @@ const bgImageStyle = {
       {/* End Event Details Desc*/}
     <div className="container-fluid">
       { registrations.map(reg =>
-                    <RegistrationTile key={reg.RegistrationID} Registration={reg}/>
+                    <RegistrationTile key={reg.RegistrationID} Registration={reg} Event={bomEvent}/>
                 )}
     </div>
   </div>

@@ -57,7 +57,7 @@ const GetEvents = (props) => {
 
   const viewAttendees = (event, cellValues) => {
     
-    history.push('/admin/events/viewattendees/' + cellValues.row["EventsID"]);
+    history.push('/admin/events/attendees/' + cellValues.row["EventsID"]);
   };
 
   const columns = [
@@ -133,7 +133,7 @@ const GetEvents = (props) => {
                 //onRowClick={(row) => history.push("/events/edit/" + row.id)} 
                 onRowClick={(params, event) => {
                   if (!event.ignore) {
-                    history.push("/admin/events/edit/" + params.row.EventsID)
+                    history.push("/admin/events/" + params.row.EventsID)
                     //console.log("push -> /roles/" + params.row.id);
                   }
                 }}

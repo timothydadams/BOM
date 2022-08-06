@@ -5,31 +5,36 @@ import EventTabs from "../../Events/EventTabs";
 import { Editor } from '@tinymce/tinymce-react'
 import {useParams, NavLink} from "react-router-dom"
 
-export default function StatusForm(){
+export default function ChurchForm(){
   const editorRef = useRef(null);
-  const [bomEvent, setFields] = useState({
-    BP_Filled: false,
-    BP_FilledText: '',
-    BP_Reserved: false,
-    BP_ReserveInstructions: '',
+  const [church, setFields] = useState({
+    BP_C_BelongsTo: false,
+    BP_C_Name: '',
+    BP_C_Association: false,
+    BP_C_Region: '',
+    BP_C_Address:'',
+    BP_C_City:'',
+    BP_C_State:'',
+    BP_C_Zip:'',
+    BP_C_PastorFN:'',
+    BP_C_PastorLN:'',
+    BP_C_PastorPhone:'',
+    BP_C_PastorEmail:'',
   });
 
   const params = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-  const eventid = params.eventid;
-  console.log(params.eventid);
-
 
     useEffect(() => {
       const fetchData = async () => {
         setIsLoading(true);
         try{
             const result = await axios(
-              'https://bomreactapi.azurewebsites.net/events/geteventinfo/' + eventid,
+              'https://bomreactapi.azurewebsites.net/profile/getchurchinfo/' + eventid,
             );
           setFields(result.data);
-          enqueueSnackbar('Events fetch success');
+          enqueueSnackbar('Profile fetch success');
         }
           catch(error){
           setError(true)
@@ -45,18 +50,17 @@ export default function StatusForm(){
  
 
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-    const eventTabs = [{title: 'General', value: 'General'}, {title:'Registration', value: 'Registration'}, {title:'Optional Costs', value: 'Optional Costs'}, {title:'Status', value: 'Status'}];
     
     const handleSubmit = async e => {
       e.preventDefault();
 
-      console.log(JSON.stringify(bomEvent));
+      console.log(JSON.stringify(church));
 
-      let response = await axios.post('https://bomreactapi.azurewebsites.net/events/save', bomEvent )
-      console.log(response);
+      let response = await axios.post('https://bomreactapi.azurewebsites.net/profile/save', church )
+      
       if (response) {
         //get new token stuff
-        enqueueSnackbar("Status Saved");
+        enqueueSnackbar("Church Saved");
       } else {
         enqueueSnackbar(error.message);
       }
@@ -88,11 +92,6 @@ function handleCheckboxChange(input){
 
 return (
 <form onSubmit={handleSubmit}>
-  <div className="eventTabs">  
-  <ul className="nav nav-pills"> 
-  {EventTabs.map(d => (<li className="nav-item"><NavLink className="nav-link" to={ eventid != undefined ? '/admin/events/edit/' + d.name + '/' + eventid : ''}>{d.name}</NavLink></li> ))} 
-  </ul>
-  </div>
   <div className="full-row gray">
     <div className="container-fluid">
       <div className="row">
@@ -142,5 +141,3 @@ return (
 </form>
     );
   }
-
-

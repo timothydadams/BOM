@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useRef } from "react"
 import { useSnackbar } from 'notistack';
 import axios from "axios"
-import EventTabs from "../../Events/EventTabs";
+import useUser from '../../../../Components/Hooks/useUser'
+import { DataGrid , GridToolbar } from '@mui/x-data-grid';
 import { Editor } from '@tinymce/tinymce-react'
 import {useParams, NavLink} from "react-router-dom"
 
-export default function StatusForm(){
+export default function SkillsForm(){
   const editorRef = useRef(null);
-  const [bomEvent, setFields] = useState({
-    BP_Filled: false,
-    BP_FilledText: '',
-    BP_Reserved: false,
-    BP_ReserveInstructions: '',
+  const user = useUser();
+  const [userSkills, setUserSkills] = useState([]);
+  const [skill, setFields] = useState({
+    BP_S_Skill: 0,
+    BP_S_Years: 0,
+    BP_S_License: '',
+    BP_S_Status: '',
   });
 
   const params = useParams();
@@ -20,16 +23,23 @@ export default function StatusForm(){
   const eventid = params.eventid;
   console.log(params.eventid);
 
+  const columns = [
+    { field: 'BP_S_Skill', headerName: 'Skill', width:200 },
+    { field: 'BP_S_Years', headerName: 'Years', width:200},
+    { field: 'BP_S_License', headerName: 'License', width: 200},
+    { field: 'BP_S_Status', headerName: 'Status', width:200},
+  ];
+
 
     useEffect(() => {
       const fetchData = async () => {
         setIsLoading(true);
         try{
             const result = await axios(
-              'https://bomreactapi.azurewebsites.net/events/geteventinfo/' + eventid,
+              'https://bomreactapi.azurewebsites.net/profile/getskills/' + user.UserID,
             );
-          setFields(result.data);
-          enqueueSnackbar('Events fetch success');
+          setUserSkills(result.data);
+          enqueueSnackbar('Skills fetch success');
         }
           catch(error){
           setError(true)
@@ -45,18 +55,17 @@ export default function StatusForm(){
  
 
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-    const eventTabs = [{title: 'General', value: 'General'}, {title:'Registration', value: 'Registration'}, {title:'Optional Costs', value: 'Optional Costs'}, {title:'Status', value: 'Status'}];
     
     const handleSubmit = async e => {
       e.preventDefault();
 
-      console.log(JSON.stringify(bomEvent));
+      console.log(JSON.stringify(profile));
 
-      let response = await axios.post('https://bomreactapi.azurewebsites.net/events/save', bomEvent )
-      console.log(response);
+      let response = await axios.post('https://bomreactapi.azurewebsites.net/profile/save', profile )
+      
       if (response) {
         //get new token stuff
-        enqueueSnackbar("Status Saved");
+        enqueueSnackbar("Skill Added");
       } else {
         enqueueSnackbar(error.message);
       }
@@ -88,11 +97,15 @@ function handleCheckboxChange(input){
 
 return (
 <form onSubmit={handleSubmit}>
-  <div className="eventTabs">  
-  <ul className="nav nav-pills"> 
-  {EventTabs.map(d => (<li className="nav-item"><NavLink className="nav-link" to={ eventid != undefined ? '/admin/events/edit/' + d.name + '/' + eventid : ''}>{d.name}</NavLink></li> ))} 
-  </ul>
-  </div>
+    <div className="full-row white">
+        <div className="container-fluid">
+        <div style={{ display: 'flex', height: '500px', width:'1000px' }}>
+              <div style={{ flexGrow: 1 }}>
+                <DataGrid columns={columns} rows={data} getRowId={(row) => row.BPSkillsID} onRowSelected={(row) => history.push("/profile/skills/edit/" + row.data.RoleID)} components={{Toolbar: GridToolbar,}} disableMultipleSelection={true}  checkboxSelection/> 
+              </div>
+            </div>
+        </div>
+    </div>
   <div className="full-row gray">
     <div className="container-fluid">
       <div className="row">
@@ -142,5 +155,3 @@ return (
 </form>
     );
   }
-
-
