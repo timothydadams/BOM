@@ -11,25 +11,25 @@ const Tab8 = () =>{
           <div className="col-md-6">
             <div className="form-group">
               <label className="required-caption"><span className="required-field">*</span>Passport Number</label>
-              <input type="text" maxlength="200" className="form-control" placeholder="Enter passport number"/>
+              <input type="text" maxLength="200" className="form-control" placeholder="Enter passport number"/>
             </div>
           </div>
           <div className="col-md-6">
             <div className="form-group">
               <label className="required-caption"><span className="required-field">*</span>Given Names (First, Middle)</label>
-              <input type="text" maxlength="200" className="form-control" placeholder="Enter given names"/>
+              <input type="text" maxLength="200" className="form-control" placeholder="Enter given names"/>
             </div>
           </div>
           <div className="col-md-6">
             <div className="form-group">
               <label className="required-caption"><span className="required-field">*</span>Surname (Last Name)</label>
-              <input type="text" maxlength="200" className="form-control" placeholder="Enter surname"/>
+              <input type="text" maxLength="200" className="form-control" placeholder="Enter surname"/>
             </div>
           </div>
           <div className="col-md-6">
             <div className="form-group">
               <label className="required-caption"><span className="required-field">*</span>Nationality</label>
-              <input type="text" maxlength="200" className="form-control" placeholder="Enter nationality"/>
+              <input type="text" maxLength="200" className="form-control" placeholder="Enter nationality"/>
             </div>
           </div>
           <div className="col-md-6">
@@ -41,12 +41,12 @@ const Tab8 = () =>{
           <div className="col-md-6">
             <div className="form-group">
               <label className="required-caption"><span className="required-field">*</span>State Of Birth</label>
-              <input type="text" maxlength="200" className="form-control" placeholder="Enter state of birth"/>
+              <input type="text" maxLength="200" className="form-control" placeholder="Enter state of birth"/>
             </div>
           </div>
           <div className="col-md-6">
             <div className="form-group">
-              <label id="" className="required-caption" for=""><span className="required-field">*</span>Gender</label>
+              <label id="" className="required-caption" htmlFor=""><span className="required-field">*</span>Gender</label>
               <select name="" id="" className="DropDownField form-control">
                 <option selected="selected" value="(select)">Select</option>
                 <option value="male">Male</option>
@@ -69,13 +69,13 @@ const Tab8 = () =>{
           <div className="col-md-6">
             <div className="form-group">
               <label className="required-caption"><span className="required-field">*</span>Profession</label>
-              <input type="text" maxlength="200" className="form-control" placeholder="Enter profession"/>
+              <input type="text" maxLength="200" className="form-control" placeholder="Enter profession"/>
             </div>
           </div>
           <div className="col-md-6">
             <div className="form-group">
               <label className="required-caption"><span className="required-field">*</span>Closest Airport</label>
-              <input type="text" maxlength="200" className="form-control" placeholder="Enter closest airport"/>
+              <input type="text" maxLength="200" className="form-control" placeholder="Enter closest airport"/>
             </div>
           </div>
         </div>

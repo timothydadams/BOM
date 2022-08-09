@@ -13,7 +13,7 @@ const Tab7 = () =>{
             <div className="health-selection-wrapper">
               <div className="checkboxes-and-radios">
                 <input type="checkbox" id="chkstock17" value=""/>
-                <label for="chkstock17">Do you have Health Insurance?</label>
+                <label htmlFor="chkstock17">Do you have Health Insurance?</label>
               </div>
             </div>
           </div>
@@ -25,7 +25,7 @@ const Tab7 = () =>{
           <div className="col-md-12">
             <div className="legal form-group form-check">
               <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
-              <label className="form-check-label" for="exampleCheck1">I understand that the supplemental accident insurance that will be provided for me by NC Baptist Men is supplemental and secondary insurance. I am responsible to have and provide my own primary health insurance coverage. I accept full responsibility for any medical bills and expenses that are not covered by this secondary coverage. It is not the responsibility for NC Baptist Men to provide me with health insurance coverage for this mission trip and I will not hold them responsible for any medical expenses that result from sickness, accident or injury while participating on this trip.: </label>
+              <label className="form-check-label" htmlFor="exampleCheck1">I understand that the supplemental accident insurance that will be provided for me by NC Baptist Men is supplemental and secondary insurance. I am responsible to have and provide my own primary health insurance coverage. I accept full responsibility for any medical bills and expenses that are not covered by this secondary coverage. It is not the responsibility for NC Baptist Men to provide me with health insurance coverage for this mission trip and I will not hold them responsible for any medical expenses that result from sickness, accident or injury while participating on this trip.: </label>
             </div>
           </div>
         </div>
@@ -34,25 +34,25 @@ const Tab7 = () =>{
           <div className="col-md-4">
             <div className="form-group">
               <label className="required-caption"><span className="required-field">*</span>Beneficiary First Name</label>
-              <input type="text" maxlength="200" className="form-control" placeholder="Beneficiary First Name"/>
+              <input type="text" maxLength="200" className="form-control" placeholder="Beneficiary First Name"/>
             </div>
           </div>
           <div className="col-md-4">
             <div className="form-group">
               <label className="required-caption">Beneficiary Middle Name</label>
-              <input type="text" maxlength="200" className="form-control" placeholder="Beneficiary Middle Name"/>
+              <input type="text" maxLength="200" className="form-control" placeholder="Beneficiary Middle Name"/>
             </div>
           </div>
           <div className="col-md-4">
             <div className="form-group">
               <label className="required-caption"><span className="required-field">*</span>Beneficiary Last Name</label>
-              <input type="text" maxlength="200" className="form-control" placeholder="Beneficiary Last Name"/>
+              <input type="text" maxLength="200" className="form-control" placeholder="Beneficiary Last Name"/>
             </div>
           </div>
           <div className="col-md-4">
             <div className="form-group">
               <label className="required-caption"><span className="required-field">*</span>Beneficiary Relationship</label>
-              <input type="text" maxlength="200" className="form-control" placeholder="Beneficiary Relationship"/>
+              <input type="text" maxLength="200" className="form-control" placeholder="Beneficiary Relationship"/>
             </div>
           </div>
         </div>

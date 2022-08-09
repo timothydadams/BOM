@@ -1,6 +1,15 @@
 import react from 'react'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import DateTimePicker from '@mui/lab/DateTimePicker'
+import DatePicker from '@mui/lab/DatePicker'
+import TextField from '@mui/material/TextField'
 
 const Tab1 = () =>{
+
+    const handleChange = (input) => {
+        
+    }
 
     return(
         <div id="tab1">
@@ -8,24 +17,30 @@ const Tab1 = () =>{
           <div className="col-md-6">
             <div className="form-group">
               <label className="required-caption"><span className="required-field">*</span>First Name</label>
-              <input type="text" maxlength="200" className="form-control" placeholder="Enter first name"/>
+              <input type="text" maxLength="200" className="form-control" placeholder="Enter first name"/>
             </div>
           </div>
           <div className="col-md-6">
             <div className="form-group">
               <label className="required-caption"><span className="required-field">*</span>Last Name</label>
-              <input type="text" maxlength="200" className="form-control" placeholder="Enter last name"/>
+              <input type="text" maxLength="200" className="form-control" placeholder="Enter last name"/>
             </div>
           </div>
           <div className="col-md-6">
             <div className="form-group">
-              <label className="required-caption"><span className="required-field">*</span>Date of Birth</label>
-              <input type="text" className="form-control datetimepicker-input" id="datetimepicker1" data-toggle="datetimepicker" data-target="#datetimepicker1" placeholder="MM/DD/YYYY"/>
+            <label className="required-caption"><span className="required-field">*</span>Date of Birth</label>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+                renderInput={(props) => <TextField id='DOB' {...props} />}
+                value=""
+                onChange={handleChange}
+            />
+            </LocalizationProvider>
             </div>
           </div>
           <div className="col-md-6">
             <div className="form-group">
-              <label id="" className="required-caption" for=""><span className="required-field">*</span>Gender</label>
+              <label id="" className="required-caption" htmlFor=""><span className="required-field">*</span>Gender</label>
               <select name="" id="" className="DropDownField form-control">
                 <option selected="selected" value="(select)">Select</option>
                 <option value="male">Male</option>
@@ -35,7 +50,7 @@ const Tab1 = () =>{
           </div>
           <div className="col-md-6">
             <div className="form-group">
-              <label id="" className="required-caption" for=""><span className="required-field">*</span>Marital Status</label>
+              <label id="" className="required-caption" htmlFor=""><span className="required-field">*</span>Marital Status</label>
               <select name="" id="" className="DropDownField form-control">
                 <option selected="selected" value="(select)">Select</option>
                 <option value="Single">Single</option>
@@ -54,12 +69,12 @@ const Tab1 = () =>{
           <div className="col-md-6">
             <div className="form-group">
               <label className="required-caption"><span className="required-field">*</span>Phone Number</label>
-              <input type="text" maxlength="200" className="form-control" placeholder="Enter your phone number"/>
+              <input type="text" maxLength="200" className="form-control" placeholder="Enter your phone number"/>
             </div>
           </div>
           <div className="col-md-6">
             <div className="form-group">
-              <label id="" className="required-caption" for="">County/Region:</label>
+              <label id="" className="required-caption" htmlFor="">County/Region:</label>
               <select name="" id="" className="DropDownField form-control">
                 <option selected="selected" value="(select)">Select</option>
                 <option value="1">Alamance- Region 4</option>
@@ -175,23 +190,23 @@ const Tab1 = () =>{
           <div className="col-md-12">
             <div className="form-group">
               <label className="required-caption"><span className="required-field">*</span>Address</label>
-              <input type="text" maxlength="200" className="form-control" placeholder="Address"/>
+              <input type="text" maxLength="200" className="form-control" placeholder="Address"/>
             </div>
           </div>
           <div className="col-md-12">
             <div className="form-group">
-              <input type="text" maxlength="200" className="form-control" placeholder="Apartment, suite, etc. (optional)"/>
+              <input type="text" maxLength="200" className="form-control" placeholder="Apartment, suite, etc. (optional)"/>
             </div>
           </div>
           <div className="col-md-4">
             <div className="form-group">
               <label className="required-caption"><span className="required-field">*</span>City</label>
-              <input type="text" maxlength="200" className="form-control" placeholder="City"/>
+              <input type="text" maxLength="200" className="form-control" placeholder="City"/>
             </div>
           </div>
           <div className="col-md-4">
             <div className="form-group">
-              <label id="" className="required-caption" for="">State</label>
+              <label id="" className="required-caption" htmlFor="">State</label>
               <select name="" id="" className="DropDownField form-control">
                 <option value=""></option>
                 <option value="AL">Alabama</option>
@@ -251,7 +266,7 @@ const Tab1 = () =>{
           <div className="col-md-4">
             <div className="form-group">
               <label className="required-caption"><span className="required-field">*</span>ZIP Code</label>
-              <input type="text" maxlength="200" className="form-control" placeholder="ZIP Code"/>
+              <input type="text" maxLength="200" className="form-control" placeholder="ZIP Code"/>
             </div>
           </div>
         </div>
@@ -263,20 +278,20 @@ const Tab1 = () =>{
           <div className="col-md-6">
             <div className="form-group">
               <label className="required-caption"><span className="required-field">*</span>Username</label>
-              <input type="text" maxlength="200" className="form-control" placeholder="Enter a username"/>
+              <input type="text" maxLength="200" className="form-control" placeholder="Enter a username"/>
               <small className="form-text text-muted">Must be a valid email address.</small> </div>
           </div>
           <div className="col-md-6"> </div>
           <div className="col-md-6">
             <div className="form-group">
               <label className="required-caption"><span className="required-field">*</span>Change Password</label>
-              <input type="text" maxlength="200" className="form-control" placeholder=""/>
+              <input type="text" maxLength="200" className="form-control" placeholder=""/>
             </div>
           </div>
           <div className="col-md-6">
             <div className="form-group">
               <label className="required-caption"><span className="required-field">*</span>Confirm Password</label>
-              <input type="text" maxlength="200" className="form-control" placeholder=""/>
+              <input type="text" maxLength="200" className="form-control" placeholder=""/>
             </div>
           </div>
         </div>

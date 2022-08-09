@@ -36,13 +36,13 @@ const Tab4 = () =>{
                 <div className="col-md-6">
                   <div className="form-group">
                     <label className="required-caption"><span className="required-field">*</span>Reference Name</label>
-                    <input type="text" maxlength="200" className="form-control" placeholder="Reference Name"/>
+                    <input type="text" maxLength="200" className="form-control" placeholder="Reference Name"/>
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="form-group">
                     <label className="required-caption"><span className="required-field">*</span>Reference Phone Number</label>
-                    <input type="text" maxlength="200" className="form-control" placeholder="Reference Phone Number"/>
+                    <input type="text" maxLength="200" className="form-control" placeholder="Reference Phone Number"/>
                   </div>
                 </div>
                 <div className="col-md-6 text-white py-1"> <a data-toggle="collapse" href="#add-ref" role="button" aria-expanded="false" aria-controls="save-reference" className="button-default button-green collapsed">Save</a><a data-toggle="collapse" href="#add-ref" role="button" aria-expanded="false" aria-controls="cancel-reference" className="button-default button-gray mx-3 collapsed">Cancel</a></div>

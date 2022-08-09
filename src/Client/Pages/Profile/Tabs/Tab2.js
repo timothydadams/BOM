@@ -48,7 +48,7 @@ const Tab2 = () =>{
               <div className="row pt-5">
                 <div className="col-md-4">
                   <div className="form-group">
-                    <label id="" className="required-caption" for=""><span className="required-field">*</span>Category</label>
+                    <label id="" className="required-caption" htmlFor=""><span className="required-field">*</span>Category</label>
                     <select name="" id="" className="DropDownField form-control">
                       <option selected="selected" value="(select)">Select</option>
                       <option value="Agriculture">Agriculture</option>
@@ -71,7 +71,7 @@ const Tab2 = () =>{
                 </div>
                 <div className="col-md-4">
                   <div className="form-group">
-                    <label id="" className="required-caption" for=""><span className="required-field">*</span>Skill</label>
+                    <label id="" className="required-caption" htmlFor=""><span className="required-field">*</span>Skill</label>
                     <select name="" id="" className="DropDownField form-control">
                       <option selected="selected" value="(select)">Select</option>
                     </select>
@@ -79,7 +79,7 @@ const Tab2 = () =>{
                 </div>
                 <div className="col-md-4">
                   <div className="form-group">
-                    <label id="" className="required-caption" for=""><span className="required-field">*</span>Years of Experience</label>
+                    <label id="" className="required-caption" htmlFor=""><span className="required-field">*</span>Years of Experience</label>
                     <select name="" id="" className="DropDownField form-control">
                       <option selected="selected" value="(select)">Select</option>
                       <option value="1">1</option>
@@ -103,12 +103,12 @@ const Tab2 = () =>{
                 <div className="col-md-4">
                   <div className="form-group">
                     <label className="required-caption"><span className="required-field">*</span>License Number</label>
-                    <input type="text" maxlength="200" className="form-control" placeholder="Enter License Number if Applicable"/>
+                    <input type="text" maxLength="200" className="form-control" placeholder="Enter License Number if Applicable"/>
                   </div>
                 </div>
                 <div className="col-md-4">
                   <div className="form-group">
-                    <label id="" className="required-caption" for=""><span className="required-field">*</span>Status</label>
+                    <label id="" className="required-caption" htmlFor=""><span className="required-field">*</span>Status</label>
                     <select name="" id="" className="DropDownField form-control">
                       <option selected="selected" value="(select)">Select</option>
                       <option value="Active">Active</option>

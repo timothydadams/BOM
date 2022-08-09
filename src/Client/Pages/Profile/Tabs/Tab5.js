@@ -42,25 +42,25 @@ const Tab5 = () =>{
                 <div className="col-md-6">
                   <div className="form-group">
                     <label className="required-caption"><span className="required-field">*</span>Contact Name</label>
-                    <input type="text" maxlength="200" className="form-control" placeholder="Contact Name"/>
+                    <input type="text" maxLength="200" className="form-control" placeholder="Contact Name"/>
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="form-group">
                     <label className="required-caption">Contact Relationship</label>
-                    <input type="text" maxlength="200" className="form-control" placeholder="Contact Relationship"/>
+                    <input type="text" maxLength="200" className="form-control" placeholder="Contact Relationship"/>
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="form-group">
                     <label className="required-caption"><span className="required-field">*</span>Contact Email</label>
-                    <input type="text" maxlength="200" className="form-control" placeholder="Contact Email"/>
+                    <input type="text" maxLength="200" className="form-control" placeholder="Contact Email"/>
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="form-group">
                     <label className="required-caption"><span className="required-field">*</span>Contact Phone Number</label>
-                    <input type="text" maxlength="200" className="form-control" placeholder="Contact Phone Number"/>
+                    <input type="text" maxLength="200" className="form-control" placeholder="Contact Phone Number"/>
                   </div>
                 </div>
                 <div className="col-md-6 text-white py-1"> <a data-toggle="collapse" href="#add-contact" role="button" aria-expanded="false" aria-controls="save-contact" className="button-default button-green collapsed">Save</a><a data-toggle="collapse" href="#add-contact" role="button" aria-expanded="false" aria-controls="cancel-contact" className="button-default button-gray mx-3 collapsed">Cancel</a></div>

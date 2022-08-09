@@ -9,7 +9,7 @@ const Tab9 = () =>{
               <div className="health-selection-wrapper">
                 <div className="checkboxes-and-radios">
                   <input type="checkbox" id="chkstock18" value=""/>
-                  <label for="chkstock18">I attend a NC Baptist Church:</label>
+                  <label htmlFor="chkstock18">I attend a NC Baptist Church:</label>
                 </div>
               </div>
             </div>
@@ -17,18 +17,18 @@ const Tab9 = () =>{
             <div className="col-md-6">
               <div className="form-group">
                 <label className="required-caption">Church Name</label>
-                <input type="text" maxlength="200" className="form-control" placeholder="Enter church name"/>
+                <input type="text" maxLength="200" className="form-control" placeholder="Enter church name"/>
                 <small className="form-text text-muted">Write the full name of your church (i.e. First Baptist Church or Calvary Baptist Church)</small> </div>
             </div>
             <div className="col-md-6">
               <div className="form-group">
                 <label className="required-caption">Church City</label>
-                <input type="text" maxlength="200" className="form-control" placeholder="Enter church city"/>
+                <input type="text" maxLength="200" className="form-control" placeholder="Enter church city"/>
               </div>
             </div>
             <div className="col-md-6">
               <div className="form-group">
-                <label id="" className="required-caption" for="">Church State</label>
+                <label id="" className="required-caption" htmlFor="">Church State</label>
                 <select name="" id="" className="DropDownField form-control">
                   <option value=""></option>
                   <option value="AL">Alabama</option>
@@ -88,7 +88,7 @@ const Tab9 = () =>{
             <div className="col-md-6">
               <div className="form-group">
                 <label className="required-caption">Church Phone</label>
-                <input type="text" maxlength="200" class="form-control" placeholder="Enter church phone"/>
+                <input type="text" maxLength="200" class="form-control" placeholder="Enter church phone"/>
               </div>
             </div>
           </div>

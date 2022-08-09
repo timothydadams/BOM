@@ -37,24 +37,24 @@ const Tab3 = () =>{
                 <div className="col-md-4">
                   <div className="form-group">
                     <label className="required-caption"><span className="required-field">*</span>School Name</label>
-                    <input type="text" maxlength="200" className="form-control" placeholder="School Name"/>
+                    <input type="text" maxLength="200" className="form-control" placeholder="School Name"/>
                   </div>
                 </div>
                 <div className="col-md-4">
                   <div className="form-group">
                     <label className="required-caption"><span className="required-field">*</span>Field of Study</label>
-                    <input type="text" maxlength="200" className="form-control" placeholder="Field of Study"/>
+                    <input type="text" maxLength="200" className="form-control" placeholder="Field of Study"/>
                   </div>
                 </div>
                 <div className="col-md-4">
                   <div className="form-group">
                     <label className="required-caption"><span className="required-field">*</span>Degree</label>
-                    <input type="text" maxlength="200" className="form-control" placeholder="Degree"/>
+                    <input type="text" maxLength="200" className="form-control" placeholder="Degree"/>
                   </div>
                 </div>
                 <div className="col-md-4">
                   <div className="form-group">
-                    <label id="" className="required-caption" for=""><span className="required-field">*</span>Start Year</label>
+                    <label id="" className="required-caption" htmlFor=""><span className="required-field">*</span>Start Year</label>
                     <select name="" id="" className="DropDownField form-control">
                       <option selected="selected" value="2022">2022</option>
                       <option value="2021">2021</option>
@@ -185,7 +185,7 @@ const Tab3 = () =>{
                 </div>
                 <div className="col-md-4">
                   <div className="form-group">
-                    <label id="" className="required-caption" for=""><span className="required-field">*</span>Start Year</label>
+                    <label id="" className="required-caption" htmlFor=""><span className="required-field">*</span>Start Year</label>
                     <select name="" id="" className="DropDownField form-control">
                       <option selected="selected" value="2022">2022</option>
                       <option value="2021">2021</option>
