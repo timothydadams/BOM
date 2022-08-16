@@ -28,7 +28,7 @@ const GetAttendees = (props) => {
       try{
 
         const result = await axios.get(
-            'https://bomreactapi.azurewebsites.net/events/geteventattendees', { params: {eventid: Number(eventid)}}
+            'https://bomreactapi.azurewebsites.net/api/events/geteventattendees', { params: {eventid: Number(eventid)}}
         );
         setData(result.data);
         enqueueSnackbar('Attendees fetch success');

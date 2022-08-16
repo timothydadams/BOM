@@ -1,6 +1,16 @@
-import react from 'react'
+import react, {useState} from 'react'
 
 const Tab5 = () =>{
+  const bomEmergencyContact = {
+    BPEmergencyContactsID:0,
+    BP_UserGUID:'',
+    BP_EC_FullName:'',
+    BP_EC_Relationship:'',
+    BP_EC_Email:'',
+    BP_EC_Phone:'',
+  }
+
+  const [emergencyContacts, setEmergencyContacts] = useState();
 
     return(
         <div id="tab5">
@@ -10,7 +20,7 @@ const Tab5 = () =>{
               <table className="table table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">Cotact Name</th>
+                    <th scope="col">Contact Name</th>
                     <th scope="col">Contact Relationship</th>
                     <th scope="col">Contact Phone Email</th>
                     <th scope="col">Contact Phone Number</th>

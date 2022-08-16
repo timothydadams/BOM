@@ -71,7 +71,7 @@ export default function RegistrationForm(){
   useEffect(() => {
     if(!contentLoaded){
       //change to from body
-      axios.get('https://bomreactapi.azurewebsites.net/events/getsingleregistration', { params: {registrationid:registrationid} })
+      axios.get('https://bomreactapi.azurewebsites.net/api/events/getsingleregistration', { params: {registrationid:registrationid} })
       .then(function(res) {
         console.log(res.data);
         getSupportingLists();
@@ -91,7 +91,7 @@ export default function RegistrationForm(){
 function getSupportingLists(){
   axios.all([
     //axios.get('https://bomreactapi.azurewebsites.net/users/getcerts'),
-    axios.get('https://bomreactapi.azurewebsites.net/events/getprofilesections')
+    axios.get('https://bomreactapi.azurewebsites.net/api/events/getprofilesections')
   ]).then(responseArr => {
     //setMembershipList(responseArr[0].data);
     setProfileSectionsList(responseArr[0].data);
@@ -162,7 +162,7 @@ const handleRegistrationFieldsChange = selectedOption => {
       registration.ProfileSections = strProfVal;
       }
 
-      let response = await axios.post('https://bomreactapi.azurewebsites.net/events/saveregistration', registration )
+      let response = await axios.post('https://bomreactapi.azurewebsites.net/api/events/saveregistration', registration )
       
       if (response) {
         //get new token stuff

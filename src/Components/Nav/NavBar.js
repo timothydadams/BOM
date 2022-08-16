@@ -1,10 +1,13 @@
-import React from "react"
+import React, { useState , useEffect } from "react"
 import { useUser } from '../Hooks/useUser'
+import { useToken } from "../Hooks/useToken"
 import { NavLink, useHistory } from "react-router-dom"
 
 export const NavBar = () => {
     const history = useHistory();
     const user = useUser();
+    const [isLoggedIn, setIsLoggedIn] = useState([]);
+    const token = useToken();
     let userParsed;
     try{
         userParsed = JSON.parse(user["User"]);
@@ -19,8 +22,14 @@ export const NavBar = () => {
         firstName = userParsed.FirstName;
     } 
 
+     //attempt to reload page in order to show admin bar after login
+     useEffect(()=> {
+        console.log('State Variable for Is Logged In: ', isLoggedIn)
+    }, []);
+
     function logout(){
         localStorage.removeItem('token');
+        setIsLoggedIn(false);
         history.push("/login");
     }
     return(

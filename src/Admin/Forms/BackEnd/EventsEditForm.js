@@ -78,7 +78,7 @@ export default function EventsEditForm(){
         try{
             getSupportingLists();
             const result = await axios(
-              'https://bomreactapi.azurewebsites.net/events/geteventsinfo?eventid=' + eventid,
+              'https://bomreactapi.azurewebsites.net/api/events/geteventsinfo?eventid=' + eventid,
             );
 
           if(result.data)
@@ -111,9 +111,9 @@ export default function EventsEditForm(){
      function getSupportingLists(){
         // execute simultaneous requests 
         axios.all([
-          axios.get('https://bomreactapi.azurewebsites.net/events/getcategories'),
-          axios.get('https://bomreactapi.azurewebsites.net/events/getpartnerships'),
-          axios.get('https://bomreactapi.azurewebsites.net/events/getaccountingcodes'),
+          axios.get('https://bomreactapi.azurewebsites.net/api/events/getcategories'),
+          axios.get('https://bomreactapi.azurewebsites.net/api/events/getpartnerships'),
+          axios.get('https://bomreactapi.azurewebsites.net/api/events/getaccountingcodes'),
          // axios.get('https://bomreactapi.azurewebsites.net/events/getcoordinators')
         ])
         .then(responseArr => {
@@ -197,7 +197,7 @@ export default function EventsEditForm(){
         bomEvent.BP_AccountingCode = bomEvent.BP_AccountingCode["ItemID"];
         bomEvent.BP_Partnership = bomEvent.BP_Partnership["ItemID"];
         console.log(bomEvent);
-        axios.post('https://bomreactapi.azurewebsites.net/events/save', bomEvent )
+        axios.post('https://bomreactapi.azurewebsites.net/api/events/save', bomEvent )
         .then(response => {
           console.log(response);
           enqueueSnackbar("Event Saved");

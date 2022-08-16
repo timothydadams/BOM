@@ -1,6 +1,7 @@
 import React, { useEffect , useState} from "react"
 import {Link, NavLink, useLocation} from "react-router-dom"
 import { useUser } from "../Hooks/useUser"
+import { useToken } from "../Hooks/useToken"
 
 
 import logo from "../img/baptists-on-mission-logo.png"
@@ -134,7 +135,8 @@ const UserLinks = (props) => (
 function SideNav(){
     const location = useLocation();
     const user = useUser();
-    const [isLoaded, setIsLoaded] = useState(false);
+    const token = useToken();
+    const [isLoggedIn, setIsLoggedIn] = useState([]);
     let roles;
     let userParsed;
     let userInitials;
@@ -142,7 +144,8 @@ function SideNav(){
 
     //attempt to reload page in order to show admin bar after login
     useEffect(()=> {
-        user ? setIsLoaded(true) : setIsLoaded(false);
+        token ? setIsLoggedIn(true) : setIsLoggedIn(false);
+        console.log('State Variable for Is Logged In: ', isLoggedIn)
     }, []);
 
 

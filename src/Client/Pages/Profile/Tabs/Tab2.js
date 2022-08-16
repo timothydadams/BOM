@@ -1,6 +1,17 @@
-import react from 'react'
+import react, { useState } from 'react'
 
 const Tab2 = () =>{
+  //used for the form for adding/editing
+  const [bomSkill, setBomSkill] = useState({
+    BPSkillsID: 0,
+    BP_UserGUID: '',
+    BP_S_Skill: '',
+    BP_S_Years: '',
+    BP_S_License:'',
+    BP_S_Status:'',
+  });
+
+  const [skills, setSkills] = useState();
 
     return(
         <div id="tab2">

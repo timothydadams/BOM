@@ -1,6 +1,19 @@
-import react from 'react'
+import react, {useState} from 'react'
 
 const Tab3 = () =>{
+  //used for education form adding/editing
+  const bomEducation = {
+    BPEducationID:0,
+    BP_UserGUID:'',
+    BP_E_School:'',
+    BP_E_Degree:'',
+    BP_E_Field:'',
+    BP_E_YearsFrom:'',
+    BP_E_YearsTo:'',
+  }
+
+  //container for education info for datagrid
+  const [educations, setEducations] = useState();
 
     return(
         <div id="tab3">

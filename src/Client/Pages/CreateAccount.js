@@ -11,7 +11,7 @@ import createAccountLogo from "../Pages/img/create-account-page-image.jpg"
 
 
 async function loginUser(credentials){
-    return fetch("https://bomreactapi.azurewebsites.net/login/login",
+    return fetch("https://bomreactapi.azurewebsites.net/api/login/login",
     {
         method: 'POST',
         headers: {

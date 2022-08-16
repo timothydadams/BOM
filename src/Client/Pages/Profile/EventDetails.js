@@ -26,8 +26,8 @@ const EventDetails = (props) => {
     try{
       setIsLoading(true);
       axios.all([
-          axios.get('https://bomreactapi.azurewebsites.net/events/geteventsinfo?eventid=' + eventid),
-          axios.get('https://bomreactapi.azurewebsites.net/events/getregistrations?eventid=' + eventid)
+          axios.get('https://bomreactapi.azurewebsites.net/api/events/geteventsinfo?eventid=' + eventid),
+          axios.get('https://bomreactapi.azurewebsites.net/api/events/getregistrations?eventid=' + eventid)
       ]).then(response=> {
           setbomEvent(response[0].data);
           setRegistrations(response[1].data);

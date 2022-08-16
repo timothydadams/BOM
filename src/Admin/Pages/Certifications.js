@@ -25,7 +25,7 @@ const Certifications = (props) => {
       setIsLoading(true);
       try{
           const result = await axios(
-            'https://bomreactapi.azurewebsites.net/users/getcerts',
+            'https://bomreactapi.azurewebsites.net/api/users/getcerts',
           );
           setData(result.data);
       }

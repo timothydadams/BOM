@@ -42,7 +42,7 @@ export default function EventsEditForm(){
         setIsLoading(true);
         try{
             const result = await axios(
-              'https://bomreactapi.azurewebsites.net/users/getusersinfo?userid=' + userid,
+              'https://bomreactapi.azurewebsites.net/api/users/getusersinfo?userid=' + userid,
             );
           //alert(JSON.stringify(fields));
           //console.log(JSON.stringify(result.data));
@@ -125,7 +125,7 @@ export default function EventsEditForm(){
 
         console.log(JSON.stringify(bomUser));
 
-        axios.post('https://bomreactapi.azurewebsites.net/users/save', bomUser)
+        axios.post('https://bomreactapi.azurewebsites.net/api/users/save', bomUser)
         //.then(response => console.log(response))
         .then(response => {
           console.log(response);

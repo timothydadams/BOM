@@ -93,9 +93,9 @@ export default function EventsCreateForm(){
      function getSupportingLists(){
         // execute simultaneous requests 
         axios.all([
-          axios.get('https://bomreactapi.azurewebsites.net/events/getcategories'),
-          axios.get('https://bomreactapi.azurewebsites.net/events/getpartnerships'),
-          axios.get('https://bomreactapi.azurewebsites.net/events/getaccountingcodes'),
+          axios.get('https://bomreactapi.azurewebsites.net/api/events/getcategories'),
+          axios.get('https://bomreactapi.azurewebsites.net/api/events/getpartnerships'),
+          axios.get('https://bomreactapi.azurewebsites.net/api/events/getaccountingcodes'),
          // axios.get('https://bomreactapi.azurewebsites.net/events/getcoordinators')
         ])
         .then(responseArr => {
@@ -170,7 +170,7 @@ export default function EventsCreateForm(){
     const handleSubmit = async e => {
         e.preventDefault();
         console.log(bomEvent);
-        axios.post('https://bomreactapi.azurewebsites.net/events/save', bomEvent )
+        axios.post('https://bomreactapi.azurewebsites.net/api/events/save', bomEvent )
         .then(response => {
           console.log(response);
           enqueueSnackbar("Event Saved");

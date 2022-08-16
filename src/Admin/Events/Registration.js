@@ -31,7 +31,7 @@ const Registration = (props) => {
           try{
               const result = await axios({
                 method: 'get',
-                url: 'https://bomreactapi.azurewebsites.net/events/getregistrations?eventid=' + eventid,
+                url: 'https://bomreactapi.azurewebsites.net/api/events/getregistrations?eventid=' + eventid,
                 data: {
                     eventid: eventid, // This is the body part
                 }

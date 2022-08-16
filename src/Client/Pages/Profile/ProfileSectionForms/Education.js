@@ -26,7 +26,7 @@ export default function EducationForm(){
         setIsLoading(true);
         try{
             const result = await axios(
-              'https://bomreactapi.azurewebsites.net/profile/getgeneralinfo/' + eventid,
+              'https://bomreactapi.azurewebsites.net/api/profile/getgeneralinfo/' + eventid,
             );
           setFields(result.data);
           enqueueSnackbar('Profile fetch success');

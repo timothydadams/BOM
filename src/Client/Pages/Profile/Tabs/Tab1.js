@@ -1,4 +1,4 @@
-import react from 'react'
+import react, { useState } from 'react'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DateTimePicker from '@mui/lab/DateTimePicker'
@@ -6,6 +6,33 @@ import DatePicker from '@mui/lab/DatePicker'
 import TextField from '@mui/material/TextField'
 
 const Tab1 = () =>{
+  const [bomUser, setFields] = useState({
+    UserID: 0,
+    UserName: '',
+    FirstName: '',
+    LastName: '',
+    Email:'',
+    Phone:'',
+    UserLastModified:'',
+    MiddleName:'',
+    FullName:'',
+    BP_DOB:'',
+    BP_G_Salutation:'',
+    BP_G_Suffix:'',
+    BP_G_Marital:'',
+    BP_G_Spouse:'',
+    BP_G_Alt_Email:'',
+    BP_G_Home_Phone:'',
+    BP_G_Text:'',
+    BP_G_Mob_Phone:'',
+    BP_Regions:'',
+    BP_G_Address:'',
+    BP_G_AddressLine2:'',
+    BP_G_AddressCity:'',
+    BP_G_AddressState:'',
+    BP_G_AddressZip:'',
+    UserPassword:'',
+  });
 
     const handleChange = (input) => {
         
