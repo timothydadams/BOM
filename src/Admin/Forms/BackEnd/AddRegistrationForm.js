@@ -78,7 +78,7 @@ export default function AddRegistrationForm(){
 function getSupportingLists(){
   axios.all([
     //axios.get('https://bomreactapi.azurewebsites.net/users/getcerts'),
-    axios.get('https://bomreactapi.azurewebsites.net/events/getprofilesections')
+    axios.get('https://bomreactapi.azurewebsites.net/api/events/getprofilesections')
   ]).then(responseArr => {
     //setMembershipList(responseArr[0].data);
     setProfileSectionsList(responseArr[0].data);
@@ -169,7 +169,7 @@ const handleRegistrationFieldsChange = option => {
 
       console.log(JSON.stringify(registration));
 
-      let response = await axios.post('https://bomreactapi.azurewebsites.net/events/saveregistration', registration )
+      let response = await axios.post('https://bomreactapi.azurewebsites.net/api/events/saveregistration', registration )
       
       if (response) {
         //get new token stuff

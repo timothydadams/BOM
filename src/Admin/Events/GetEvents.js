@@ -28,11 +28,11 @@ const GetEvents = (props) => {
       setIsLoading(true);
       try{
 
-        const categoriesListResult = await axios.get('https://bomreactapi.azurewebsites.net/events/getcategories');
+        const categoriesListResult = await axios.get('https://bomreactapi.azurewebsites.net/api/events/getcategories');
         setCategoriesList(categoriesListResult.data);
 
         const result = await axios(
-            'https://bomreactapi.azurewebsites.net/events/getevents', 
+            'https://bomreactapi.azurewebsites.net/api/events/getevents', 
         );
         setData(result.data);
         enqueueSnackbar('Events fetch success');

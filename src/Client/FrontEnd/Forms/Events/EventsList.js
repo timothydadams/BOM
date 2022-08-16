@@ -14,7 +14,7 @@ const EventsList = (props) => {
       setIsLoading(true);
       try{
           const result = await axios(
-            'https://bomreactapi.azurewebsites.net/events/getevents',
+            'https://bomreactapi.azurewebsites.net/api/events/getevents',
           );
           setData(result.data);
       }

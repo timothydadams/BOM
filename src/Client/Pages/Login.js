@@ -27,7 +27,7 @@ export default function Login(){
           return;
         }
         else{
-          let response = await axios.post("https://bomreactapi.azurewebsites.net/login/authenticate",{username, password});
+          let response = await axios.post("https://bomreactapi.azurewebsites.net/api/login/authenticate",{username, password});
 
           //console.log('This is back from server', typeof response);
           if(response && response.data !== undefined)
@@ -54,7 +54,7 @@ export default function Login(){
 
    async function loginUser(username, password){
       
-       axios.post("https://bomreactapi.azurewebsites.net/login/authenticate?" + "username=" + username + "&password=" + password)
+       axios.post("https://bomreactapi.azurewebsites.net/api/login/authenticate?" + "username=" + username + "&password=" + password)
         .then(data => {
           //console.log('Server response with token:', data);
           return data;

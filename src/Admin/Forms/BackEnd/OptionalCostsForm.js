@@ -41,7 +41,7 @@ export default function OptionalCostsForm(){
         setIsLoading(true);
         try{
             const result = await axios(
-              'https://bomreactapi.azurewebsites.net/events/geteventsinfo?eventid=' + eventid,
+              'https://bomreactapi.azurewebsites.net/api/events/geteventsinfo?eventid=' + eventid,
             );
           //alert(JSON.stringify(fields));
           //console.log(JSON.stringify(result.data));
@@ -140,7 +140,7 @@ export default function OptionalCostsForm(){
 
         console.log(JSON.stringify(bomEvent));
 
-        let response = await axios.post('https://bomreactapi.azurewebsites.net/events/save', bomEvent )
+        let response = await axios.post('https://bomreactapi.azurewebsites.net/api/events/save', bomEvent )
         
         if (response) {
           //get new token stuff

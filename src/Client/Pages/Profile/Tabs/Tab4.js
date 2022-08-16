@@ -1,6 +1,14 @@
-import react from 'react'
+import react, {useState} from 'react'
 
 const Tab4 = () =>{
+  const bomReferences = {
+    BPReferencesID:0,
+    BP_UserGUID:'',
+    BP_R_Name:'',
+    BP_R_Phone:'',
+  }
+
+  const [references, setReferences] = useState();
 
     return(
         <div id="tab4">

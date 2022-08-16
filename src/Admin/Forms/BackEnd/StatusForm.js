@@ -26,7 +26,7 @@ export default function StatusForm(){
         setIsLoading(true);
         try{
             const result = await axios(
-              'https://bomreactapi.azurewebsites.net/events/geteventinfo/' + eventid,
+              'https://bomreactapi.azurewebsites.net/api/events/geteventinfo/' + eventid,
             );
           setFields(result.data);
           enqueueSnackbar('Events fetch success');
@@ -52,7 +52,7 @@ export default function StatusForm(){
 
       console.log(JSON.stringify(bomEvent));
 
-      let response = await axios.post('https://bomreactapi.azurewebsites.net/events/save', bomEvent )
+      let response = await axios.post('https://bomreactapi.azurewebsites.net/api/events/save', bomEvent )
       console.log(response);
       if (response) {
         //get new token stuff

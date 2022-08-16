@@ -15,7 +15,7 @@ const Users = (props) => {
       setIsLoading(true);
       try{
           const result = await axios(
-            'https://bomreactapi.azurewebsites.net/users/getusers', { header: AuthHeader()}
+            'https://bomreactapi.azurewebsites.net/api/users/getusers', { header: AuthHeader()}
           );
           setData(result.data);
       }

@@ -14,7 +14,7 @@ const Roles = (props) => {
       setIsLoading(true);
       try{
           const result = await axios(
-            'https://bomreactapi.azurewebsites.net/roles/getroles',
+            'https://bomreactapi.azurewebsites.net/api/roles/getroles',
           );
           setData(result.data);
       }

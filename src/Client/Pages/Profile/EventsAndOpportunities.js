@@ -22,12 +22,12 @@ const EventsAndOpportunities = (props) => {
     const fetchData = async () => {
       setIsLoading(true);
       try{
-          const categoriesResult = await axios('https://bomreactapi.azurewebsites.net/events/getcategories');
+          const categoriesResult = await axios('https://bomreactapi.azurewebsites.net/api/events/getcategories');
           setCategoriesList(categoriesResult.data);
           //console.log('categories list fetched from api: ',categoriesResult.data);
 
           const result = await axios(
-            'https://bomreactapi.azurewebsites.net/events/getevents',
+            'https://bomreactapi.azurewebsites.net/api/events/getevents',
           );
           setData(result.data);
           //console.log(result.data);

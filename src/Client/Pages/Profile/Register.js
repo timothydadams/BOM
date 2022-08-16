@@ -98,7 +98,7 @@ const Register = (props) => {
   async function CheckTeamExists(){
     const result = await axios({
       method: 'post',
-      url: 'https://bomreactapi.azurewebsites.net/events/checkteamexists',
+      url: 'https://bomreactapi.azurewebsites.net/api/events/checkteamexists',
       data: {
         eventid: eventid
       }
@@ -110,7 +110,7 @@ const Register = (props) => {
   async function JoinTeam(){
     const result = await axios({
       method: 'post',
-      url: 'https://bomreactapi.azurewebsites.net/events/getgroup',
+      url: 'https://bomreactapi.azurewebsites.net/api/events/getgroup',
       data: {
           EventID: eventid,
           TeamName: team.BPGroupName, // This is the body part
@@ -132,7 +132,7 @@ const Register = (props) => {
     console.log(team);
     const result = await axios({
       method: 'post',
-      url: 'https://bomreactapi.azurewebsites.net/events/creategroup',
+      url: 'https://bomreactapi.azurewebsites.net/api/events/creategroup',
       data: {
           Group: team, // This is the body part
       }
@@ -151,7 +151,7 @@ const Register = (props) => {
   async function CreateAttendeeFromProfileSections(user){
     const result = await axios({
       method: 'post',
-      url: 'https://bomreactapi.azurewebsites.net/events/createattendeefromprofile',
+      url: 'https://bomreactapi.azurewebsites.net/api/events/createattendeefromprofile',
       data: {
           eventid: eventid,
           user: user, // This is the body part
@@ -166,7 +166,7 @@ const Register = (props) => {
     //get registrationForms and loop through to create attendees
     const result = await axios({
       method: 'post',
-      url: 'https://bomreactapi.azurewebsites.net/events/createattendees',
+      url: 'https://bomreactapi.azurewebsites.net/api/events/createattendees',
       data: {
           eventid: eventid,
           attendee: attendee, // This is the body part
