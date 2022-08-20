@@ -1,14 +1,25 @@
-import React, { memo } from "react";
-import { Redirect, Route } from "react-router-dom";
-import { useUser } from './Hooks/useUser'
-import Login from './../Client/Pages/Login'
+import React from "react";
+import { useLocation,Navigate,Outlet } from "react-router-dom";
+import useData from '../Hooks/useData';
 
-function RouteRequiresLogin({ component: Component, ...restOfProps }) {
-  const user = useUser();
-   
-  return user 
-    ? <Route {...restOfProps} render={(props) => <Component {...props} /> } />
-    : <Redirect to={"/login?redirectUrl=" + restOfProps.path } />;
+
+const RequireAuth = ({ allowedRoles }) => {
+  const { auth } = useData();
+  const roles = auth?.roles != null ? auth.roles : [];
+  const user = auth?.User != null ? auth.User : null;
+  const location = useLocation();
+
+  console.log('REQUIRE AUTH', user, roles, allowedRoles); 
+
+  return (
+    roles?.find(x => allowedRoles?.includes(x)) 
+      ? <Outlet />
+      : user && allowedRoles.length == 0
+        ? <Outlet />
+        : auth
+          ? <Navigate to="/unauthorized" state={{from: location}} replace />
+          : <Navigate to="/login" state={{from: location}} replace />
+  );
 }
 
-export default memo(RouteRequiresLogin);
+export default RequireAuth;

@@ -1,5 +1,4 @@
 import React from 'react'
-import dompurify from 'dompurify'
 
 const CategoryHelper = (props) => {
     let catStrings = [];
@@ -14,7 +13,7 @@ const CategoryHelper = (props) => {
      });
     }
 
-    return(
+    return (
         catStrings.map((catString,i) => {
            return <li key={i}>{catString}</li>
         })
