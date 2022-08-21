@@ -16,7 +16,9 @@ import Tab9 from "./Tabs/Tab9"
 const ProfileContainer = () =>{
 
     const loc = useLocation();
-    console.log(loc.hash);
+    //console.log(loc.hash);
+    //const tabNum = loc.hash.slice(-1);
+    //console.log('tabNumber:',tabNum);
 
     return(
         <div>

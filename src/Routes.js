@@ -22,6 +22,17 @@ import AddRegistrationForm from './components/admin/forms/AddRegistrationForm';
 import OptionalCosts from './components/admin/events/OptionalCosts';
 import Status from './components/admin/events/Status';
 
+//profile forms
+//import ChurchForm from './components/profile/ProfileSectionForms/Church';
+//import EducationForm from './components/profile/ProfileSectionForms/Education';
+//import EmergencyContactForm from './components/profile/ProfileSectionForms/EmergencyContact';
+//import GeneralForm from './components/profile/ProfileSectionForms/General';
+//import HealthForm from './components/profile/ProfileSectionForms/Health';
+//import InsuranceForm from './components/profile/ProfileSectionForms/Insurance';
+//import PassportForm from './components/profile/ProfileSectionForms/Passport';
+import ReferencesForm from './components/profile/ProfileSectionForms/References';
+import SkillsForm from './components/profile/ProfileSectionForms/Skills';
+
 //unprotected routes
 import EventCheckIn from './components/profile/EventCheckIn';
 import EventsAndOpportunities from "./components/profile/EventsAndOpportunities";

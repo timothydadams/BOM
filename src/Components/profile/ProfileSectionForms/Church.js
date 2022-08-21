@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react"
 import { useSnackbar } from 'notistack';
 import axios from "axios"
-import EventTabs from "../../Events/EventTabs";
+import {EventTabs} from "../../../utils/constants";
 import { Editor } from '@tinymce/tinymce-react'
-import {useParams, NavLink} from "react-router-dom"
+import {useParams, NavLink} from "react-router-dom";
 
 export default function ChurchForm(){
+  const {eventid} = useParams();
   const editorRef = useRef(null);
   const [church, setFields] = useState({
     BP_C_BelongsTo: false,
