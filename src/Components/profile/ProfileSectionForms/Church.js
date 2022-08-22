@@ -74,9 +74,9 @@ export default function ChurchForm(){
     const value = target.value;
     const name = target.id;
     console.log(name,value);
-    setFields({...bomEvent,
-      [name]: value
-    });
+    ///setFields({...bomEvent,
+    //  [name]: value
+    //});
 }
 
 function handleCheckboxChange(input){
@@ -84,9 +84,9 @@ function handleCheckboxChange(input){
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.id;
     console.log(name,value);
-    setFields({...bomEvent,
-      [name]: value
-    });
+    //setFields({...bomEvent,
+    //  [name]: value
+    //});
 }
     
 
@@ -105,16 +105,16 @@ return (
 <div className="col-md-4 mt-3">
       <label id="m_c_ctl02_BP_DatesFlexible_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_DatesFlexible_checkbox">Event Filled</label>
       <div className="form-check">
-        <input id="BP_Filled" type="checkbox" name="m$c$ctl02$BP_DatesFlexible$checkbox" value={bomEvent.BP_Filled}  onChange={handleCheckboxChange}/>
+        <input id="BP_Filled" type="checkbox" name="m$c$ctl02$BP_DatesFlexible$checkbox" value={/*bomEvent.BP_Filled*/ 1}  onChange={handleCheckboxChange}/>
         <label className="form-check-label" htmlFor="gridCheck1"></label>
       </div>
       <small className="form-text text-muted"></small> 
       </div>
-      { bomEvent.BP_Filled ? 
+      { /* bomEvent.BP_Filled */ 1==1 ? 
       <div className="col-md-12">
       <div className="form-group">
         <label id="m_c_ctl02_BP_Description_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_Description_editor">Filled Text</label>
-        <Editor onInit={(evt,editor) => editorRef.current = editor} id="BP_Description" initialValue={bomEvent.BP_FilledText} init={{height:500, menubar:true}} onChange={handleFieldChange}></Editor>
+        <Editor onInit={(evt,editor) => editorRef.current = editor} id="BP_Description" initialValue={/*bomEvent.BP_FilledText*/ 1} init={{height:500, menubar:true}} onChange={handleFieldChange}></Editor>
         <small className="form-text text-muted">Enter the text you want to show when the event is filled.</small> 
       </div>
         </div>
@@ -122,16 +122,16 @@ return (
       <div className="col-md-4 mt-3">
       <label id="m_c_ctl02_BP_DatesFlexible_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_DatesFlexible_checkbox">Event Reserved</label>
       <div className="form-check">
-        <input id="BP_Reserved" type="checkbox" name="m$c$ctl02$BP_DatesFlexible$checkbox" value={bomEvent.BP_Reserved}  onChange={handleCheckboxChange}/>
+        <input id="BP_Reserved" type="checkbox" name="m$c$ctl02$BP_DatesFlexible$checkbox" value={/*bomEvent.BP_Reserved*/1}  onChange={handleCheckboxChange}/>
         <label className="form-check-label" htmlFor="gridCheck1"></label>
       </div>
       <small className="form-text text-muted"></small> 
       </div>
-      { bomEvent.BP_Reserved ?
+      { /*bomEvent.BP_Reserved*/ 1==1 ?
       <div className="col-md-12">
       <div className="form-group">
         <label id="m_c_ctl02_BP_Description_lb" className="control-label editing-form-label" htmlFor="m_c_ctl02_BP_Description_editor">Reserve Instructions</label>
-        <Editor onInit={(evt,editor) => editorRef.current = editor} id="BP_ReserveInstructions" initialValue={bomEvent.BP_ReserveInstructions} init={{height:500, menubar:true}} onChange={handleFieldChange}></Editor>
+        <Editor onInit={(evt,editor) => editorRef.current = editor} id="BP_ReserveInstructions" initialValue={/*bomEvent.BP_ReserveInstructions*/1} init={{height:500, menubar:true}} onChange={handleFieldChange}></Editor>
         <small className="form-text text-muted">Enter the instructions that you want to show to users.</small> 
       </div>
         </div>

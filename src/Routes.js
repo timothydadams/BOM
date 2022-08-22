@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import RequireAuth from './components/RouteRequiresLogin';
+import PersistLogin from './components/PersistLogin';
+
 
 //components used in admin routes
 import Events from './components/admin/pages/Events';
@@ -23,13 +25,13 @@ import OptionalCosts from './components/admin/events/OptionalCosts';
 import Status from './components/admin/events/Status';
 
 //profile forms
-//import ChurchForm from './components/profile/ProfileSectionForms/Church';
-//import EducationForm from './components/profile/ProfileSectionForms/Education';
-//import EmergencyContactForm from './components/profile/ProfileSectionForms/EmergencyContact';
-//import GeneralForm from './components/profile/ProfileSectionForms/General';
-//import HealthForm from './components/profile/ProfileSectionForms/Health';
-//import InsuranceForm from './components/profile/ProfileSectionForms/Insurance';
-//import PassportForm from './components/profile/ProfileSectionForms/Passport';
+import ChurchForm from './components/profile/ProfileSectionForms/Church';
+import EducationForm from './components/profile/ProfileSectionForms/Education';
+import EmergencyContactForm from './components/profile/ProfileSectionForms/EmergencyContact';
+import GeneralForm from './components/profile/ProfileSectionForms/General';
+import HealthForm from './components/profile/ProfileSectionForms/Health';
+import InsuranceForm from './components/profile/ProfileSectionForms/Insurance';
+import PassportForm from './components/profile/ProfileSectionForms/Passport';
 import ReferencesForm from './components/profile/ProfileSectionForms/References';
 import SkillsForm from './components/profile/ProfileSectionForms/Skills';
 
@@ -42,7 +44,7 @@ import ProfileContainer from "./components/profile/ProfileContainer";
 import Login from './components/Login';
 import CreateAccount from "./components/CreateAccount";
 import MakePayment from "./components/MakePayment";
-import { NotFound, NotAuthorized, NoResults, Thanks } from "./components/Generic";
+import { NotFound, NotAuthorized, NoResults, RegistrationThanks } from "./components/Generic";
 
 //import Profile from "./../Client/Pages/Profile/Profile"
 
@@ -63,6 +65,7 @@ const AppRoutes = () => (
           <Route path='/makepayment' element={<MakePayment/>} />
           <Route path='/unauthorized' element={<NotAuthorized />} />
 
+          <Route element={<PersistLogin />} >
           {/* PRIVATE ROUTES WITH SPECIFIC ROLE ACCESS */}
           <Route element={<RequireAuth allowedRoles={[8,33,32]}/>} >
             <Route path="/admin" element={<Dashboard />} />
@@ -73,6 +76,7 @@ const AppRoutes = () => (
             <Route path="/admin/certifications" element={<Certifications />}/>
             <Route path="/admin/reporting" element={<Reporting />}/>
             <Route path="/admin/settings" element={<Settings />}/>
+            <Route path="/admin/churchform" element={<ChurchForm />} />
           </Route>
           <Route element={<RequireAuth allowedRoles={[8,33,32,35]}/>} >
             <Route path="/admin/events" element={<Events />}/>
@@ -99,10 +103,10 @@ const AppRoutes = () => (
           <Route element={<RequireAuth allowedRoles={[]} />} >
             <Route path="/profile" element={<ProfileContainer />} />
             <Route path='/events/register/:eventid' render={props => <Register {...props}/>} />
-            <Route path='/events/register/thanks/:eventid' render={props => <Thanks {...props}/>} />
+            <Route path='/events/register/:eventid/thanks' render={props => <RegistrationThanks {...props}/>} />
           </Route>
 
-
+          </Route>
           {/* CATCH ALL */}
           <Route path="*" element={<NotFound />} />
 

@@ -1,15 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
-export const NotFound = () => (
+
+const ReturnLink = () => (
+  <Link to={-1}>
+    Go Back
+  </Link>
+)
+
+export const NotFound = () =>{
+  
+  return (
   <section>
     <h1>404 - Not Found!</h1>
     <br />
-    <Link to="/">
-      Go Home
-    </Link>
+    <ReturnLink />
   </section>
-);
+  );
+  }
+
 
 export const NoResults = () => (
   <div className="Error Error-Label">
@@ -23,17 +32,15 @@ export const NotAuthorized = () => (
     <h1>Oops!</h1>
     <p>Looks like you don't have access.</p>
     <br />
-    <Link to="/">
-      Go Home
-    </Link>
+    <ReturnLink />
   </section>
 );
 
-export const Thanks = (props) => (
+export const RegistrationThanks = (props) => (
   <div>
     <h1>`Thank you for registering for ${props.bomEvent.BP_Title}`</h1>
-    <Link to="/">
-      Go Home
+    <Link to="/events">
+      View other events
     </Link>
   </div>
 );

@@ -1,4 +1,5 @@
 import axios from '../api/axios';
+import { getPayloadFromToken } from '../utils/helpers';
 import useData from './useData';
 
 const useRefreshToken = () => {
@@ -9,11 +10,13 @@ const useRefreshToken = () => {
             withCredentials:true
         });
         setAuth(prev => {
-            console.log(JSON.stringify(prev));
-            console.log(response.data.token);
-            return {...prev, token: response.data.token}
+            console.log('prev:',JSON.stringify(prev));
+            console.log('current:',response.data);
+            return {...prev,
+                ...getPayloadFromToken(response.data)
+            }
         });
-        return response.data.token;
+        return response.data;
     }
     return refresh;
 }

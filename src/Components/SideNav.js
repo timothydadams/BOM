@@ -104,14 +104,15 @@ const AdminLinks = ({ roles }) => {
 
 
 
-const UserLinks = (props) => {
-    
+const UserLinks = ({user}) => {
+    const isLoggedIn = user && user?.User !== undefined;
+    console.log('im logged in sidebar',isLoggedIn)
     const links = [
-        {label:"Events and Opportunities",path:"/events"},
-        {label:"Reserved/Attending",path:"/myreserved"},
-        {label:"Certifications",path:"/mycertifications"},
-        {label:"Account Information",path:"/profile"},
-        {label:"Event Check In",path:"/checkin"},
+        {label:"Events and Opportunities",path:"/events",requiresUser:false},
+        {label:"Reserved/Attending",path:"/myreserved",requiresUser:false},
+        {label:"Certifications",path:"/mycertifications",requiresUser:false},
+        {label:"Account Information",path:"/profile", requiresUser:true},
+        {label:"Event Check In",path:"/checkin",requiresUser:false},
     ];
     
     return (
@@ -119,7 +120,10 @@ const UserLinks = (props) => {
             <div className="sb-sidenav-menu-heading">
                 User
             </div>
-            {links.map(i => <SideBarLink item={i} />)} 
+            {links.map(i => {
+                if (i.requiresUser === false || (i.requiresUser === true && isLoggedIn === true)) {
+                    return <SideBarLink item={i} />
+                } })} 
         </div>
     )   
 };
@@ -149,7 +153,7 @@ const SideNav = ({user}) => {
                             <AdminLinks roles={roles} />
                         }
 
-                        <UserLinks />
+                        <UserLinks user={user}/>
 
                      </div>
                 </div>        

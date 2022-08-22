@@ -7,7 +7,7 @@ import useData from '../../../Hooks/useData';
 
 const path = '/users/getusers';
 
-const Users = (props) => {
+const Users = () => {
   const { auth } = useData();
   const token = auth?.token;
   const [data, setData] = useState([]);
@@ -26,10 +26,12 @@ const Users = (props) => {
               withCredentials:true
             }
           );
+          console.log('result:', result);
           setData(result.data);
       }
         catch(error){
-        setError(true)
+          console.log('error',error);
+        setError("There was")
       }
  
       
@@ -56,15 +58,14 @@ const Users = (props) => {
   }
 
 
-  return (
-          <div>
-            {error && (
+  return isLoading === true 
+    ? (
+      <div>Loading ...</div>
+    ) : error === true || !Array.isArray(data)
+          ? (
               <div style={{ color: `red` }}>
                 Error occurred while fetching api, Please contact an admin
               </div>
-            )}
-            {isLoading ? (
-        <div>Loading ...</div>
           ) : (
             <div style={{ display: 'flex', height: '500px', width:'1000px' }}>
               <div style={{ flexGrow: 1 }}>
@@ -79,8 +80,7 @@ const Users = (props) => {
                 />
               </div>
             </div>
-          )}
-          </div>) 
+          )
 }
 
 

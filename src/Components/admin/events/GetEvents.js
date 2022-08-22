@@ -157,6 +157,6 @@ const GetEvents = (props) => {
 
 
 
-export default GetEvents
+export default GetEvents;
 
 
